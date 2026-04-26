@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; font-family: var(--font-sans); }
+  .panel { padding: 36px 48px; display: flex; align-items: center; gap: 64px; }
+  .light { background: #F7F5F0; }
+  .dark  { background: #0B1F3A; }
+  .white-bg { background: #FFFFFF; }
+  .logo-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .logo-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; }
+  .divider { height: 1px; background: #E8E4DC; }
+  .dark .divider { background: rgba(255,255,255,0.1); }
+  /* Inline wordmark styles so preview works without external SVG rendering quirks */
+  .wm { line-height: 1; }
+  .wm-main { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; letter-spacing: 0.13em; display: block; }
+  .wm-bar  { height: 2.5px; background: #C4922A; display: block; margin: 3px 0 5px; }
+  .wm-sub  { font-family: Georgia, serif; font-size: 9px; letter-spacing: 0.55em; font-weight: 400; display: block; }
+</style>
+</head>
+<body>
+
+<!-- Light background -->
+<div class="panel light">
+  <div class="logo-wrap">
+    <div class="wm">
+      <span class="wm-main" style="font-size:36px; color:#0B1F3A;">QUANTA</span>
+      <span class="wm-bar" style="width:180px"></span>
+      <span class="wm-sub" style="color:#8A8478;">CAPITAL HOLDINGS</span>
+    </div>
+    <span class="logo-label" style="color:#8A8478; margin-top:4px">Primary — on light</span>
+  </div>
+
+  <div class="logo-wrap">
+    <div class="wm">
+      <span class="wm-main" style="font-size:22px; color:#0B1F3A;">QUANTA</span>
+      <span class="wm-bar" style="width:110px"></span>
+      <span class="wm-sub" style="color:#8A8478; font-size:7px;">CAPITAL HOLDINGS</span>
+    </div>
+    <span class="logo-label" style="color:#8A8478; margin-top:4px">Small / nav size</span>
+  </div>
+
+  <div class="logo-wrap">
+    <div class="wm">
+      <span class="wm-main" style="font-size:36px; color:#0B1F3A;">QUANTA</span>
+      <span class="wm-bar" style="width:180px"></span>
+    </div>
+    <span class="logo-label" style="color:#8A8478; margin-top:4px">Wordmark only</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- Dark background -->
+<div class="panel dark">
+  <div class="logo-wrap">
+    <div class="wm">
+      <span class="wm-main" style="font-size:36px; color:#FFFFFF;">QUANTA</span>
+      <span class="wm-bar" style="width:180px"></span>
+      <span class="wm-sub" style="color:rgba(255,255,255,0.4);">CAPITAL HOLDINGS</span>
+    </div>
+    <span class="logo-label" style="color:rgba(255,255,255,0.35); margin-top:4px">Reversed — on dark</span>
+  </div>
+
+  <div class="logo-wrap">
+    <div class="wm">
+      <span class="wm-main" style="font-size:22px; color:#FFFFFF;">QUANTA</span>
+      <span class="wm-bar" style="width:110px"></span>
+      <span class="wm-sub" style="color:rgba(255,255,255,0.35); font-size:7px;">CAPITAL HOLDINGS</span>
+    </div>
+    <span class="logo-label" style="color:rgba(255,255,255,0.35); margin-top:4px">Small / nav size</span>
+  </div>
+
+  <div class="logo-wrap">
+    <div class="wm">
+      <span class="wm-main" style="font-size:36px; color:#C4922A;">QUANTA</span>
+      <span class="wm-bar" style="width:180px"></span>
+    </div>
+    <span class="logo-label" style="color:rgba(255,255,255,0.35); margin-top:4px">Gold accent variant</span>
+  </div>
+</div>
+
+</body>
+</html>

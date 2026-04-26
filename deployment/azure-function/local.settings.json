@@ -1,0 +1,16 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureFunctionsJobHost__logging__logLevel__default": "Information",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "BlobContainerName": "form-submissions",
+
+    "SendGridApiKey": "SG.YOUR_KEY_HERE",
+    "AlertEmailTo": "info@quantach.com",
+    "AlertEmailFrom": "noreply@quantach.com",
+
+    "AllowedOrigin": "https://YOUR_GITHUB_USERNAME.github.io"
+  }
+}

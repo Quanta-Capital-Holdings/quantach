@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; background: var(--bg-primary); padding: 24px 28px; font-family: var(--font-sans); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .section-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: var(--fg-secondary); margin-bottom: 12px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  label { font-size: 12px; font-weight: 500; color: var(--fg-primary); letter-spacing: 0.02em; }
+  input, textarea, select {
+    font-family: var(--font-sans); font-size: 14px; color: var(--fg-primary);
+    border: 1.5px solid var(--border-strong); border-radius: var(--radius-md);
+    padding: 10px 14px; background: white; outline: none; transition: border-color 0.2s;
+    width: 100%; box-sizing: border-box;
+  }
+  input:focus, textarea:focus { border-color: var(--color-navy-800); box-shadow: 0 0 0 3px rgba(11,31,58,0.08); }
+  input.error { border-color: var(--color-error); }
+  input.success { border-color: var(--color-success); }
+  .helper { font-size: 11px; color: var(--fg-secondary); }
+  .error-msg { font-size: 11px; color: var(--color-error); }
+  textarea { resize: vertical; min-height: 80px; }
+  .req { color: var(--color-gold-600); margin-left: 2px; }
+</style>
+</head>
+<body>
+<div class="section-label">Form Inputs</div>
+<div class="grid">
+  <div class="field">
+    <label>First name <span class="req">*</span></label>
+    <input type="text" placeholder="Jane">
+    <span class="helper">As it appears on legal documents</span>
+  </div>
+  <div class="field">
+    <label>Last name <span class="req">*</span></label>
+    <input type="text" placeholder="Smith">
+  </div>
+  <div class="field">
+    <label>Email address <span class="req">*</span></label>
+    <input type="email" value="jane@smithgroup.ca" class="success">
+  </div>
+  <div class="field">
+    <label>Phone number <span class="req">*</span></label>
+    <input type="tel" value="" class="error" placeholder="+1 (416) 555-0100">
+    <span class="error-msg">A valid phone number is required</span>
+  </div>
+  <div class="field" style="grid-column:1/-1">
+    <label>Tell us about your business</label>
+    <textarea placeholder="Briefly describe your company — industry, size, and what you're looking for..."></textarea>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; background: var(--bg-primary); font-family: var(--font-sans); padding: 20px; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .chip { border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+  .chip-color { height: 44px; }
+  .chip-info { padding: 6px 8px; background: white; border-top: 1px solid var(--border-default); }
+  .chip-name { font-size: 10px; font-weight: 600; color: var(--fg-primary); }
+  .chip-var { font-size: 9px; font-family: var(--font-mono); color: var(--fg-secondary); }
+  .section-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: var(--fg-secondary); margin: 0 0 8px; }
+  .section { margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<div class="section">
+  <div class="section-label">Backgrounds</div>
+  <div class="grid">
+    <div class="chip"><div class="chip-color" style="background:#F7F5F0; border:1px solid #E8E4DC;"></div><div class="chip-info"><div class="chip-name">Primary BG</div><div class="chip-var">--bg-primary</div></div></div>
+    <div class="chip"><div class="chip-color" style="background:#FFFFFF; border:1px solid #E8E4DC;"></div><div class="chip-info"><div class="chip-name">Secondary BG</div><div class="chip-var">--bg-secondary</div></div></div>
+    <div class="chip"><div class="chip-color" style="background:#0B1F3A;"></div><div class="chip-info"><div class="chip-name">Inverse BG</div><div class="chip-var">--bg-inverse</div></div></div>
+    <div class="chip"><div class="chip-color" style="background:#F8F2DC;"></div><div class="chip-info"><div class="chip-name">Accent BG</div><div class="chip-var">--bg-accent</div></div></div>
+  </div>
+</div>
+<div class="section">
+  <div class="section-label">Foregrounds</div>
+  <div class="grid">
+    <div class="chip"><div class="chip-color" style="background:#1A1612;"></div><div class="chip-info"><div class="chip-name">Primary FG</div><div class="chip-var">--fg-primary</div></div></div>
+    <div class="chip"><div class="chip-color" style="background:#8A8478;"></div><div class="chip-info"><div class="chip-name">Secondary FG</div><div class="chip-var">--fg-secondary</div></div></div>
+    <div class="chip"><div class="chip-color" style="background:#C4922A;"></div><div class="chip-info"><div class="chip-name">Accent FG</div><div class="chip-var">--fg-accent</div></div></div>
+    <div class="chip"><div class="chip-color" style="background:#0B1F3A;"></div><div class="chip-info"><div class="chip-name">Brand FG</div><div class="chip-var">--fg-brand</div></div></div>
+  </div>
+</div>
+<div class="section">
+  <div class="section-label">Borders & Status</div>
+  <div class="grid">
+    <div class="chip"><div class="chip-color" style="background:#E8E4DC;"></div><div class="chip-info"><div class="chip-name">Default Border</div><div class="chip-var">--border-default</div></div></div>
+    <div class="chip"><div class="chip-color" style="background:#C4922A;"></div><div class="chip-info"><div class="chip-name">Accent Border</div><div class="chip-var">--border-accent</div></div></div>
+    <div class="chip"><div class="chip-color" style="background:#2D7A4F;"></div><div class="chip-info"><div class="chip-name">Success</div><div class="chip-var">--color-success</div></div></div>
+    <div class="chip"><div class="chip-color" style="background:#B33A3A;"></div><div class="chip-info"><div class="chip-name">Error</div><div class="chip-var">--color-error</div></div></div>
+  </div>
+</div>
+</body>
+</html>

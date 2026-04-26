@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; background: var(--bg-primary); padding: 20px 24px; font-family: var(--font-sans); }
+  .grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; margin-bottom: 20px; }
+  .box { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .sq { border-radius: var(--radius-md); border: 1px solid var(--border-default); }
+  .lbl { font-size: 9px; font-family: var(--font-mono); color: var(--fg-secondary); }
+  .section-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: var(--fg-secondary); margin-bottom: 10px; }
+  .radius-row { display: flex; gap: 16px; align-items: center; }
+  .r-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .r-sq { width: 40px; height: 40px; background: var(--color-navy-800); }
+  .shadow-row { display: flex; gap: 20px; align-items: center; margin-top: 4px; }
+  .sh-box { width: 60px; height: 40px; background: white; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
+  .sh-label { font-size: 9px; font-family: var(--font-mono); color: var(--fg-secondary); margin-top: 6px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="section-label">Spacing Tokens</div>
+<div class="grid">
+  <div class="box"><div class="sq" style="width:4px;height:4px;background:var(--color-navy-800)"></div><div class="lbl">1·4px</div></div>
+  <div class="box"><div class="sq" style="width:8px;height:8px;background:var(--color-navy-800)"></div><div class="lbl">2·8px</div></div>
+  <div class="box"><div class="sq" style="width:12px;height:12px;background:var(--color-navy-800)"></div><div class="lbl">3·12px</div></div>
+  <div class="box"><div class="sq" style="width:16px;height:16px;background:var(--color-navy-800)"></div><div class="lbl">4·16px</div></div>
+  <div class="box"><div class="sq" style="width:24px;height:24px;background:var(--color-navy-800)"></div><div class="lbl">6·24px</div></div>
+  <div class="box"><div class="sq" style="width:32px;height:32px;background:var(--color-navy-800)"></div><div class="lbl">8·32px</div></div>
+  <div class="box"><div class="sq" style="width:40px;height:40px;background:var(--color-navy-800)"></div><div class="lbl">10·40px</div></div>
+  <div class="box"><div class="sq" style="width:48px;height:48px;background:var(--color-navy-800)"></div><div class="lbl">12·48px</div></div>
+</div>
+
+<div class="section-label">Border Radius</div>
+<div class="radius-row" style="margin-bottom:20px">
+  <div class="r-item"><div class="r-sq" style="border-radius:2px"></div><div class="lbl">sm · 2px</div></div>
+  <div class="r-item"><div class="r-sq" style="border-radius:4px"></div><div class="lbl">md · 4px</div></div>
+  <div class="r-item"><div class="r-sq" style="border-radius:8px"></div><div class="lbl">lg · 8px</div></div>
+  <div class="r-item"><div class="r-sq" style="border-radius:16px"></div><div class="lbl">xl · 16px</div></div>
+  <div class="r-item"><div class="r-sq" style="border-radius:9999px;width:40px;height:40px"></div><div class="lbl">full</div></div>
+</div>
+
+<div class="section-label">Shadow Scale</div>
+<div class="shadow-row">
+  <div><div class="sh-box" style="box-shadow:0 1px 4px rgba(11,31,58,0.06)"></div><div class="sh-label">sm</div></div>
+  <div><div class="sh-box" style="box-shadow:0 2px 12px rgba(11,31,58,0.08)"></div><div class="sh-label">md</div></div>
+  <div><div class="sh-box" style="box-shadow:0 8px 32px rgba(11,31,58,0.12)"></div><div class="sh-label">lg</div></div>
+  <div><div class="sh-box" style="box-shadow:0 20px 60px rgba(11,31,58,0.18)"></div><div class="sh-label">xl</div></div>
+</div>
+</body>
+</html>

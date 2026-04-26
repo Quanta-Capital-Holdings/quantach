@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; background: var(--bg-primary); font-family: var(--font-sans); }
+  /* Nav */
+  nav { background: white; border-bottom: 1px solid var(--border-default); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 64px; box-shadow: var(--shadow-sm); }
+  .nav-logo { display: flex; align-items: center; gap: 12px; }
+  .nav-logo-mark { width: 32px; height: 32px; }
+  .nav-wordmark { font-family: var(--font-display); font-size: 15px; font-weight: 600; letter-spacing: 0.04em; color: var(--color-navy-800); }
+  .nav-wordmark small { display: block; font-size: 9px; letter-spacing: 0.18em; font-weight: 400; color: var(--fg-secondary); text-transform: uppercase; }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-link { font-size: 13px; font-weight: 500; color: var(--fg-primary); text-decoration: none; letter-spacing: 0.02em; transition: color 0.2s; }
+  .nav-link:hover, .nav-link.active { color: var(--color-navy-800); }
+  .nav-link.active { border-bottom: 2px solid var(--color-gold-600); padding-bottom: 2px; }
+  .nav-cta { background: var(--color-navy-800); color: white; padding: 9px 22px; border-radius: var(--radius-md); font-size: 13px; font-weight: 500; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--color-navy-700); }
+  /* Dark nav variant */
+  nav.dark { background: var(--color-navy-800); border-bottom: 1px solid rgba(255,255,255,0.08); margin-top: 12px; }
+  nav.dark .nav-link { color: rgba(255,255,255,0.75); }
+  nav.dark .nav-link.active { color: white; border-bottom-color: var(--color-gold-400); }
+  nav.dark .nav-cta { background: var(--color-gold-600); color: white; }
+  nav.dark .nav-wordmark { color: white; }
+  nav.dark .nav-wordmark small { color: rgba(255,255,255,0.5); }
+</style>
+</head>
+<body>
+<!-- Light nav -->
+<nav>
+  <div class="nav-logo">
+    <svg class="nav-logo-mark" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="22" stroke="#0B1F3A" stroke-width="3.5" fill="none"/>
+      <line x1="46" y1="46" x2="57" y2="35" stroke="#C4922A" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="32" cy="32" r="4.5" fill="#C4922A"/>
+    </svg>
+    <div class="nav-wordmark">QUANTA <small>CAPITAL HOLDINGS</small></div>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link active" href="#">Home</a>
+    <a class="nav-link" href="#">Our Approach</a>
+    <a class="nav-link" href="#">Portfolio</a>
+    <a class="nav-link" href="#">Team</a>
+    <a class="nav-cta" href="#">Contact Us</a>
+  </div>
+</nav>
+<!-- Dark nav -->
+<nav class="dark">
+  <div class="nav-logo">
+    <svg class="nav-logo-mark" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="22" stroke="#FFFFFF" stroke-width="3.5" fill="none"/>
+      <line x1="46" y1="46" x2="57" y2="35" stroke="#C4922A" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="32" cy="32" r="4.5" fill="#C4922A"/>
+    </svg>
+    <div class="nav-wordmark">QUANTA <small>CAPITAL HOLDINGS</small></div>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link active" href="#">Home</a>
+    <a class="nav-link" href="#">Our Approach</a>
+    <a class="nav-link" href="#">Portfolio</a>
+    <a class="nav-link" href="#">Team</a>
+    <a class="nav-cta" href="#">Contact Us</a>
+  </div>
+</nav>
+</body>
+</html>

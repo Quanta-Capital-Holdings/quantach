@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Quanta Capital Holdings Inc. — A Canadian investment firm driving growth through strategic business acquisitions and M&A partnerships.">
+<title>Quanta Capital Holdings Inc.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', system-ui, sans-serif; background: #F7F5F0; color: #1A1612; line-height: 1.6; }
+img, svg { display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ── Tokens ───────────────────────────────────── */
+:root {
+  --navy: #0B1F3A;
+  --navy-dark: #071529;
+  --navy-light: #1A3A60;
+  --gold: #C4922A;
+  --gold-light: #DFC070;
+  --gold-pale: #F8F2DC;
+  --off-white: #F7F5F0;
+  --warm-100: #E8E4DC;
+  --warm-200: #D2CCBF;
+  --warm-400: #8A8478;
+  --warm-900: #1A1612;
+  --max-w: 1200px;
+  --pad-x: clamp(20px, 5vw, 80px);
+}
+
+/* ── Layout Helpers ───────────────────────────── */
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); }
+.section { padding: clamp(60px, 8vw, 110px) 0; }
+.eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.eyebrow.light { color: var(--gold-light); }
+.display { font-family: 'Playfair Display', Georgia, serif; font-weight: 500; line-height: 1.1; letter-spacing: -0.02em; }
+
+/* ── NAV ──────────────────────────────────────── */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(247,245,240,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--warm-100);
+  transition: box-shadow 0.3s ease;
+}
+#nav.scrolled { box-shadow: 0 2px 20px rgba(11,31,58,0.08); }
+.nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); height: 68px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { display: flex; align-items: center; gap: 11px; cursor: pointer; }
+.nav-logo-mark { width: 34px; height: 34px; flex-shrink: 0; }
+.nav-wordmark { line-height: 1; }
+.nav-wordmark strong { display: block; font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 600; letter-spacing: 0.06em; color: var(--navy); }
+.nav-wordmark span { display: block; font-size: 9px; letter-spacing: 0.2em; font-weight: 500; color: var(--warm-400); text-transform: uppercase; margin-top: 2px; }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-link { font-size: 13.5px; font-weight: 500; color: var(--warm-900); letter-spacing: 0.01em; transition: color 0.2s; padding: 4px 0; border-bottom: 1.5px solid transparent; }
+.nav-link:hover { color: var(--navy); border-bottom-color: var(--gold); }
+.nav-btn { background: var(--navy); color: white; padding: 10px 24px; border-radius: 4px; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; transition: background 0.2s, transform 0.15s; }
+.nav-btn:hover { background: var(--navy-light); transform: translateY(-1px); }
+.nav-mobile-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.nav-mobile-toggle span { width: 22px; height: 2px; background: var(--navy); border-radius: 2px; transition: all 0.2s; }
+
+/* ── HERO ─────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  background: var(--navy);
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+  padding-top: 68px;
+}
+.hero-grid {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0);
+  background-size: 40px 40px;
+  position: absolute; inset: 0;
+}
+.hero-glow {
+  position: absolute; width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,146,42,0.12) 0%, transparent 70%);
+  top: -100px; right: -100px; pointer-events: none;
+}
+.hero-inner { max-width: var(--max-w); margin: 0 auto; padding: clamp(60px, 10vw, 120px) var(--pad-x); position: relative; z-index: 1; }
+.hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(196,146,42,0.15); border: 1px solid rgba(196,146,42,0.3); border-radius: 2px; padding: 6px 14px; margin-bottom: 32px; }
+.hero-tag span { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-light); }
+.hero-h1 { font-family: 'Playfair Display', serif; font-size: clamp(44px, 6vw, 80px); font-weight: 500; color: white; line-height: 1.08; letter-spacing: -0.03em; max-width: 780px; margin-bottom: 24px; }
+.hero-h1 em { font-style: italic; color: var(--gold-light); }
+.hero-sub { font-size: clamp(16px, 2vw, 20px); font-weight: 300; color: rgba(255,255,255,0.7); max-width: 560px; line-height: 1.7; margin-bottom: 44px; }
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn-hero-primary { background: var(--gold); color: white; padding: 15px 36px; border-radius: 4px; font-size: 15px; font-weight: 500; letter-spacing: 0.02em; transition: background 0.2s, transform 0.15s; }
+.btn-hero-primary:hover { background: #b5841f; transform: translateY(-2px); }
+.btn-hero-ghost { background: transparent; color: rgba(255,255,255,0.8); padding: 14px 28px; border-radius: 4px; border: 1.5px solid rgba(255,255,255,0.2); font-size: 15px; font-weight: 400; transition: all 0.2s; }
+.btn-hero-ghost:hover { border-color: rgba(255,255,255,0.5); color: white; }
+.hero-scroll { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.hero-scroll span { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); font-weight: 500; }
+.scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+
+/* ── STATS BAR ────────────────────────────────── */
+#stats-bar { background: var(--gold); padding: 0; }
+.stats-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); display: grid; grid-template-columns: repeat(4, 1fr); }
+.stat-item { padding: 32px 0; text-align: center; border-right: 1px solid rgba(255,255,255,0.2); }
+.stat-item:last-child { border-right: none; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 600; color: white; line-height: 1; margin-bottom: 4px; }
+.stat-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.75); }
+
+/* ── ABOUT ────────────────────────────────────── */
+#about { background: white; }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about-img-wrap { position: relative; }
+.about-img-placeholder { width: 100%; aspect-ratio: 4/5; background: var(--navy); border-radius: 4px; overflow: hidden; position: relative; }
+.about-img-placeholder::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(196,146,42,0.2) 0%, transparent 60%); }
+.about-img-inner { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.about-img-inner svg { opacity: 0.15; }
+.about-badge { position: absolute; bottom: -20px; right: -20px; background: var(--gold); color: white; padding: 20px 24px; border-radius: 4px; box-shadow: 0 8px 32px rgba(11,31,58,0.2); }
+.about-badge-num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 600; line-height: 1; }
+.about-badge-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; margin-top: 4px; }
+.about-text h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 3.5vw, 48px); font-weight: 500; color: var(--navy); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 24px; }
+.about-text p { font-size: 16px; line-height: 1.75; color: #5C5448; margin-bottom: 16px; }
+.about-link { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--navy); margin-top: 12px; border-bottom: 1.5px solid var(--gold); padding-bottom: 2px; transition: gap 0.2s; }
+.about-link:hover { gap: 14px; }
+
+/* ── PILLARS ──────────────────────────────────── */
+#pillars { background: var(--off-white); }
+.pillars-head { text-align: center; max-width: 600px; margin: 0 auto 60px; }
+.pillars-head h2 { font-family: 'Playfair Display', serif; font-size: clamp(30px, 3vw, 44px); font-weight: 500; color: var(--navy); letter-spacing: -0.02em; margin-bottom: 16px; }
+.pillars-head p { font-size: 16px; color: var(--warm-400); line-height: 1.7; }
+.pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.pillar-card { background: white; border: 1px solid var(--warm-100); border-radius: 4px; padding: 36px 32px; transition: box-shadow 0.25s, transform 0.25s; }
+.pillar-card:hover { box-shadow: 0 8px 32px rgba(11,31,58,0.1); transform: translateY(-3px); }
+.pillar-icon { width: 48px; height: 48px; border-radius: 4px; background: #EEF5FB; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.pillar-card h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 500; color: var(--navy); margin-bottom: 12px; }
+.pillar-card p { font-size: 14px; line-height: 1.7; color: var(--warm-400); }
+
+/* ── SELLER CTA ───────────────────────────────── */
+#seller-cta { background: var(--navy); }
+.seller-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.seller-text h2 { font-family: 'Playfair Display', serif; font-size: clamp(30px, 3.5vw, 50px); font-weight: 500; color: white; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 20px; }
+.seller-text h2 em { font-style: italic; color: var(--gold-light); }
+.seller-text p { font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.65); margin-bottom: 16px; }
+.seller-features { list-style: none; margin: 28px 0 36px; display: flex; flex-direction: column; gap: 12px; }
+.seller-features li { display: flex; align-items: flex-start; gap: 12px; font-size: 14.5px; color: rgba(255,255,255,0.8); line-height: 1.5; }
+.seller-features li::before { content: ''; width: 18px; height: 18px; border-radius: 50%; background: rgba(196,146,42,0.2); border: 1.5px solid var(--gold); flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; }
+.check-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: rgba(196,146,42,0.15); border: 1.5px solid var(--gold); flex-shrink: 0; margin-top: 1px; }
+.seller-form-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 36px; backdrop-filter: blur(8px); }
+.seller-form-card h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: white; font-weight: 500; margin-bottom: 8px; }
+.seller-form-card p { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.form-field { display: flex; flex-direction: column; gap: 5px; }
+.form-field label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+.form-field input, .form-field textarea, .form-field select {
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px; padding: 11px 14px; color: white; outline: none;
+  transition: border-color 0.2s, background 0.2s; width: 100%;
+}
+.form-field input::placeholder, .form-field textarea::placeholder { color: rgba(255,255,255,0.3); }
+.form-field input:focus, .form-field textarea:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); }
+.form-field textarea { resize: vertical; min-height: 90px; }
+.form-req { color: var(--gold-light); }
+.form-submit { width: 100%; background: var(--gold); color: white; border: none; border-radius: 4px; padding: 14px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.15s; margin-top: 8px; letter-spacing: 0.02em; }
+.form-submit:hover { background: #b5841f; transform: translateY(-1px); }
+.form-privacy { font-size: 11px; color: rgba(255,255,255,0.35); text-align: center; margin-top: 12px; }
+
+/* ── PROCESS ──────────────────────────────────── */
+#process { background: white; }
+.process-head { text-align: center; max-width: 560px; margin: 0 auto 56px; }
+.process-head h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3vw, 42px); font-weight: 500; color: var(--navy); letter-spacing: -0.02em; margin-bottom: 14px; }
+.process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+.process-steps::before { content: ''; position: absolute; top: 24px; left: 12.5%; right: 12.5%; height: 1px; background: var(--warm-100); z-index: 0; }
+.process-step { padding: 0 20px; text-align: center; position: relative; z-index: 1; }
+.step-num { width: 48px; height: 48px; border-radius: 50%; background: var(--navy); color: white; font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; border: 3px solid var(--off-white); }
+.process-step h4 { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 500; color: var(--navy); margin-bottom: 10px; }
+.process-step p { font-size: 13px; line-height: 1.65; color: var(--warm-400); }
+
+/* ── TESTIMONIAL ──────────────────────────────── */
+#testimonial { background: var(--gold-pale); border-top: 1px solid #EAD49A; border-bottom: 1px solid #EAD49A; }
+.testimonial-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+.quote-mark-large { font-family: 'Playfair Display', serif; font-size: 80px; color: var(--gold-light); line-height: 0.7; margin-bottom: 20px; display: block; }
+.testimonial-inner blockquote { font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.5vw, 28px); font-style: italic; font-weight: 400; color: var(--navy); line-height: 1.55; margin-bottom: 28px; }
+.testimonial-attr { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-400); }
+
+/* ── CONTACT PAGE ─────────────────────────────── */
+#contact-page { display: none; }
+#contact-page.active { display: block; }
+.contact-hero { background: var(--navy); padding: clamp(60px,8vw,100px) 0 clamp(40px,6vw,70px); }
+.contact-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px,5vw,64px); color: white; font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 16px; }
+.contact-hero p { font-size: 18px; color: rgba(255,255,255,0.6); max-width: 520px; line-height: 1.7; }
+.contact-body { background: var(--off-white); padding: clamp(48px,6vw,80px) 0; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; align-items: start; }
+.contact-info h3 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 500; color: var(--navy); margin-bottom: 12px; }
+.contact-info p { font-size: 14px; line-height: 1.7; color: var(--warm-400); margin-bottom: 32px; }
+.contact-detail { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+.contact-detail-icon { width: 40px; height: 40px; border-radius: 4px; background: white; border: 1px solid var(--warm-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.contact-detail-text strong { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warm-400); margin-bottom: 2px; }
+.contact-detail-text span { font-size: 14px; color: var(--navy); }
+.contact-form-card { background: white; border: 1px solid var(--warm-100); border-radius: 4px; box-shadow: 0 2px 20px rgba(11,31,58,0.06); padding: 40px; }
+.contact-form-card h3 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--navy); font-weight: 500; margin-bottom: 6px; }
+.contact-form-card .sub { font-size: 14px; color: var(--warm-400); margin-bottom: 28px; }
+.field-group { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.field-single { margin-bottom: 16px; }
+.cf-label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--warm-400); margin-bottom: 6px; }
+.cf-input, .cf-textarea, .cf-select {
+  width: 100%; font-family: 'DM Sans', sans-serif; font-size: 14.5px;
+  border: 1.5px solid var(--warm-200); border-radius: 4px;
+  padding: 11px 14px; color: var(--warm-900); background: white;
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.cf-input:focus, .cf-textarea:focus, .cf-select:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(11,31,58,0.07); }
+.cf-textarea { resize: vertical; min-height: 110px; }
+.cf-req { color: var(--gold); }
+.cf-submit { width: 100%; background: var(--navy); color: white; border: none; border-radius: 4px; padding: 15px; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500; cursor: pointer; transition: background 0.2s, transform 0.15s; margin-top: 8px; letter-spacing: 0.02em; }
+.cf-submit:hover { background: var(--navy-light); transform: translateY(-1px); }
+.cf-note { font-size: 12px; color: var(--warm-400); text-align: center; margin-top: 14px; line-height: 1.6; }
+.success-msg { display: none; text-align: center; padding: 48px 32px; }
+.success-msg.show { display: block; }
+.success-icon { width: 60px; height: 60px; background: #EBF5EE; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
+.success-msg h3 { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--navy); margin-bottom: 10px; }
+.success-msg p { font-size: 15px; color: var(--warm-400); line-height: 1.7; }
+
+/* ── FOOTER ───────────────────────────────────── */
+#footer { background: var(--navy-dark); padding: 60px 0 32px; }
+.footer-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); }
+.footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer-brand p { font-size: 13.5px; line-height: 1.75; color: rgba(255,255,255,0.45); margin-top: 16px; max-width: 300px; }
+.footer-col h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a { font-size: 13.5px; color: rgba(255,255,255,0.6); transition: color 0.2s; }
+.footer-col ul li a:hover { color: white; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; }
+.footer-legal { font-size: 12px; color: rgba(255,255,255,0.3); }
+.footer-legal a { color: rgba(255,255,255,0.45); transition: color 0.2s; }
+.footer-legal a:hover { color: rgba(255,255,255,0.7); }
+
+/* ── HOME PAGE ────────────────────────────────── */
+#home-page { display: block; }
+#home-page.hidden { display: none; }
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 900px) {
+  .about-grid, .seller-inner, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  .pillars-grid { grid-template-columns: 1fr 1fr; }
+  .process-steps { grid-template-columns: 1fr 1fr; }
+  .process-steps::before { display: none; }
+  .process-step { margin-bottom: 32px; }
+  .stats-inner { grid-template-columns: 1fr 1fr; }
+  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; }
+  .form-row { grid-template-columns: 1fr; }
+  .field-group { grid-template-columns: 1fr; }
+  .about-img-placeholder { aspect-ratio: 16/9; }
+}
+@media (max-width: 600px) {
+  .pillars-grid, .process-steps, .stats-inner { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; }
+  .btn-hero-primary, .btn-hero-ghost { text-align: center; }
+}
+
+/* ── Animations ───────────────────────────────── */
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" onclick="showPage('home')" style="text-decoration:none">
+      <div style="line-height:1">
+        <span style="display:block; font-family:'Playfair Display',Georgia,serif; font-size:20px; font-weight:700; letter-spacing:0.12em; color:#0B1F3A;">QUANTA</span>
+        <span style="display:block; height:2px; background:#C4922A; margin:3px 0 4px; width:100%;"></span>
+        <span style="display:block; font-family:'DM Sans',sans-serif; font-size:8px; letter-spacing:0.45em; font-weight:500; color:#8A8478; text-transform:uppercase;">Capital Holdings</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" onclick="showPage('home'); scrollTo('about')" href="#">Our Story</a>
+      <a class="nav-link" onclick="showPage('home'); scrollTo('pillars')" href="#">Approach</a>
+      <a class="nav-link" onclick="showPage('home'); scrollTo('process')" href="#">Process</a>
+      <a class="nav-link" onclick="showPage('home'); scrollTo('seller-cta')" href="#">Sell Your Business</a>
+      <a class="nav-btn" onclick="showPage('contact')" href="#">Contact Us</a>
+    </div>
+    <div class="nav-mobile-toggle" onclick="toggleMobileNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ HOME PAGE ═══════════════════════ -->
+<div id="home-page">
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C4922A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      <span>Canadian Investment Firm · M&A · Business Acquisitions</span>
+    </div>
+    <h1 class="hero-h1">We acquire great businesses<br>and help them <em>grow further.</em></h1>
+    <p class="hero-sub">Quanta Capital Holdings partners with exceptional companies across Canada to unlock their full potential through strategic acquisition and hands-on operational expertise.</p>
+    <div class="hero-actions">
+      <a class="btn-hero-primary" onclick="showPage('contact')" href="#">Explore an Acquisition →</a>
+      <a class="btn-hero-ghost" onclick="scrollTo('about')" href="#">Learn Our Approach</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<section id="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num">$2.4B+</div>
+      <div class="stat-label">Assets Deployed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">40+</div>
+      <div class="stat-label">Acquisitions Completed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">15+</div>
+      <div class="stat-label">Industries Served</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Confidential Process</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap fade-in">
+        <div class="about-img-placeholder">
+          <div class="about-img-inner">
+            <svg width="120" height="120" viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="32" r="22" stroke="#FFFFFF" stroke-width="3" fill="none"/>
+              <line x1="46" y1="46" x2="57" y2="35" stroke="#C4922A" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="32" cy="32" r="4.5" fill="#C4922A"/>
+            </svg>
+          </div>
+        </div>
+        <div class="about-badge">
+          <div class="about-badge-num">Est. 2025</div>
+          <div class="about-badge-label">Toronto, Canada</div>
+        </div>
+      </div>
+      <div class="about-text fade-in">
+        <div class="eyebrow">Who We Are</div>
+        <h2>A partner built for the long term, not the next quarter.</h2>
+        <p>Quanta Capital Holdings Inc. is a Canadian investment firm and holding company. Our mission is to drive growth and value creation through strategic business acquisitions — partnering with exceptional companies to unlock their full potential.</p>
+        <p>We leverage our expertise in operations, finance, and market expansion to foster sustainable success and long-term profitability. When you partner with Quanta, you gain more than capital — you gain a committed, experienced team with skin in the game.</p>
+        <a class="about-link" onclick="scrollTo('pillars')" href="#">Discover our investment philosophy</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section id="pillars" class="section">
+  <div class="container">
+    <div class="pillars-head fade-in">
+      <div class="eyebrow">Our Approach</div>
+      <h2>Built on three core pillars</h2>
+      <p>Every acquisition we make is guided by a clear framework that prioritizes lasting value over short-term returns.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card fade-in">
+        <div class="pillar-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B1F3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+        </div>
+        <h3>Identify & Evaluate</h3>
+        <p>We seek businesses with solid fundamentals, unique market positions, and untapped growth potential — then conduct thorough, confidential due diligence.</p>
+      </div>
+      <div class="pillar-card fade-in">
+        <div class="pillar-icon" style="background:#FDF8EE">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C4922A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Partner & Invest</h3>
+        <p>We work collaboratively with founders and management teams — never displacing what makes a company great, but amplifying it with capital, resources, and expertise.</p>
+      </div>
+      <div class="pillar-card fade-in">
+        <div class="pillar-icon" style="background:#EBF5EE">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D7A4F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <h3>Scale & Sustain</h3>
+        <p>Through operational improvements, strategic add-on acquisitions, and market expansion, we transform solid companies into industry leaders.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="section">
+  <div class="container">
+    <div class="process-head fade-in">
+      <div class="eyebrow">How It Works</div>
+      <h2>A clear, confidential process</h2>
+    </div>
+    <div class="process-steps">
+      <div class="process-step fade-in">
+        <div class="step-num">1</div>
+        <h4>Initial Conversation</h4>
+        <p>You reach out. We listen. No pressure, no obligation — just an honest discussion about your goals and your business.</p>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-num">2</div>
+        <h4>Confidential Review</h4>
+        <p>We review your business under strict NDA. Our team evaluates fit, value drivers, and long-term potential.</p>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-num">3</div>
+        <h4>Letter of Intent</h4>
+        <p>If there's alignment, we present a fair, transparent offer with clear terms — no hidden conditions.</p>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-num">4</div>
+        <h4>Close & Transition</h4>
+        <p>We move swiftly, support your team through the transition, and begin building together from day one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SELLER CTA -->
+<section id="seller-cta" class="section">
+  <div class="container">
+    <div class="seller-inner">
+      <div class="seller-text fade-in">
+        <div class="eyebrow light">For Business Owners</div>
+        <h2>Considering selling your <em>business?</em></h2>
+        <p>You've built something remarkable. Whether you're ready to step back, bring in a partner, or explore your options — we'd love to have a confidential conversation.</p>
+        <ul class="seller-features">
+          <li>
+            <span class="check-icon">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#C4922A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Strict confidentiality — we sign an NDA before any discussion
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#C4922A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Fair, transparent valuations — no games, no lowballing
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#C4922A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            We move quickly — decisions within 30 days
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#C4922A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            Your legacy is protected — we don't strip and flip
+          </li>
+        </ul>
+        <a class="btn-hero-primary" onclick="showPage('contact')" href="#">Start the Conversation →</a>
+      </div>
+
+      <!-- Quick Contact Form -->
+      <div class="seller-form-card fade-in">
+        <h3>Send us a message</h3>
+        <p>Confidential. No obligation. We'll respond within 24 hours.</p>
+        <form id="quick-form" onsubmit="handleQuickForm(event)">
+          <div class="form-row">
+            <div class="form-field">
+              <label>First name <span class="form-req">*</span></label>
+              <input type="text" placeholder="Jane" required>
+            </div>
+            <div class="form-field">
+              <label>Last name <span class="form-req">*</span></label>
+              <input type="text" placeholder="Smith" required>
+            </div>
+          </div>
+          <div class="form-field" style="margin-bottom:12px">
+            <label>Email address <span class="form-req">*</span></label>
+            <input type="email" placeholder="jane@company.ca" required>
+          </div>
+          <div class="form-field" style="margin-bottom:12px">
+            <label>Phone number <span class="form-req">*</span></label>
+            <input type="tel" placeholder="+1 (416) 555-0100" required>
+          </div>
+          <div class="form-field" style="margin-bottom:8px">
+            <label>Tell us about your business</label>
+            <textarea placeholder="Industry, annual revenue, reason for considering a sale..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message</button>
+          <div id="quick-error" style="display:none;margin-top:10px;font-size:12px;color:#DFC070;text-align:center;"></div>
+          <p class="form-privacy">Your information is kept strictly confidential and never shared.</p>
+        </form>
+        <div id="quick-success" style="display:none; text-align:center; padding:32px 0; color:white;">
+          <div style="font-size:40px; margin-bottom:12px;">✓</div>
+          <div style="font-family:'Playfair Display',serif; font-size:20px; margin-bottom:8px;">Thank you for reaching out.</div>
+          <div style="font-size:13px; opacity:0.6;">We'll be in touch within 24 hours.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section id="testimonial" class="section">
+  <div class="container">
+    <div class="testimonial-inner fade-in">
+      <span class="quote-mark-large">"</span>
+      <blockquote>Working with Quanta was the most straightforward business transaction I've experienced in 30 years. They said what they'd do, and they did it. My team has never been stronger.</blockquote>
+      <div class="testimonial-attr">— Robert M., Former Owner, Industrial Supply Co. · Acquired 2022</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- end #home-page -->
+
+
+<!-- ═══════════════════════ CONTACT PAGE ═══════════════════════ -->
+<div id="contact-page">
+  <div class="contact-hero" style="padding-top: calc(68px + clamp(40px,6vw,80px))">
+    <div class="container">
+      <div class="eyebrow light">Get In Touch</div>
+      <h1>Let's start a<br><em style="font-style:italic; color:var(--gold-light)">conversation.</em></h1>
+      <p>Whether you're exploring a sale, seeking a strategic partner, or simply curious — we're here. All enquiries are strictly confidential.</p>
+    </div>
+  </div>
+
+  <div class="contact-body">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>We'd love to hear from you.</h3>
+          <p>Reach out using the form, or contact us directly. We typically respond within one business day.</p>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B1F3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </div>
+            <div class="contact-detail-text">
+              <strong>Email</strong>
+              <span>info@quantach.com</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B1F3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.36 2 2 0 0 1 3.58 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.82-.82a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="contact-detail-text">
+              <strong>Phone</strong>
+              <span>+1 (416) 555-0100</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B1F3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="contact-detail-text">
+              <strong>Location</strong>
+              <span>Toronto, Ontario, Canada</span>
+            </div>
+          </div>
+          <div style="margin-top:40px; padding:24px; background:var(--gold-pale); border:1px solid #EAD49A; border-radius:4px;">
+            <div class="eyebrow" style="margin-bottom:8px">Confidentiality Pledge</div>
+            <p style="font-size:13px; color:var(--warm-400); line-height:1.7; margin:0">All information you share with us is held in strict confidence. We sign a mutual NDA before any substantive discussion of your business.</p>
+          </div>
+        </div>
+
+        <div class="contact-form-card">
+          <div id="contact-form-inner">
+            <h3>Send us a message</h3>
+            <p class="sub">All fields marked <span style="color:var(--gold)">*</span> are required.</p>
+            <form onsubmit="handleContactForm(event)">
+              <div class="field-group">
+                <div>
+                  <label class="cf-label">First name <span class="cf-req">*</span></label>
+                  <input class="cf-input" type="text" placeholder="Jane" required>
+                </div>
+                <div>
+                  <label class="cf-label">Last name <span class="cf-req">*</span></label>
+                  <input class="cf-input" type="text" placeholder="Smith" required>
+                </div>
+              </div>
+              <div class="field-single">
+                <label class="cf-label">Email address <span class="cf-req">*</span></label>
+                <input class="cf-input" type="email" placeholder="jane@company.ca" required>
+              </div>
+              <div class="field-single">
+                <label class="cf-label">Phone number <span class="cf-req">*</span></label>
+                <input class="cf-input" type="tel" placeholder="+1 (416) 555-0100" required>
+              </div>
+              <div class="field-single">
+                <label class="cf-label">Company / Business name</label>
+                <input class="cf-input" type="text" placeholder="Smith Group Inc.">
+              </div>
+              <div class="field-single">
+                <label class="cf-label">Industry</label>
+                <select class="cf-select">
+                  <option value="" disabled selected>Select your industry</option>
+                  <option>Manufacturing</option>
+                  <option>Distribution & Logistics</option>
+                  <option>Business Services</option>
+                  <option>Technology</option>
+                  <option>Healthcare</option>
+                  <option>Construction & Trades</option>
+                  <option>Retail & Consumer</option>
+                  <option>Food & Beverage</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field-single">
+                <label class="cf-label">Message <span class="cf-req">*</span></label>
+                <textarea class="cf-textarea" placeholder="Tell us about your business and what you're looking for. No details are too small." required></textarea>
+              </div>
+              <button type="submit" class="cf-submit">Send Message</button>
+              <div id="contact-error" style="display:none;margin-top:10px;font-size:12px;color:var(--color-error,#B33A3A);text-align:center;padding:8px;background:#FEF2F2;border-radius:4px;border:1px solid #FECACA;"></div>
+              <p class="cf-note">By submitting this form, you agree to our <a href="#" style="color:var(--warm-400); text-decoration:underline">Privacy Policy</a>. We will never share your information with third parties.</p>
+            </form>
+          </div>
+          <div class="success-msg" id="contact-success">
+            <div class="success-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2D7A4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3>Message received.</h3>
+            <p>Thank you for reaching out. A member of our team will be in touch within one business day.</p>
+            <button onclick="resetContactForm()" style="margin-top:24px; background:none; border:1.5px solid var(--warm-200); border-radius:4px; padding:10px 24px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--warm-400); cursor:pointer;">Send another message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER (shared) -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div style="line-height:1; margin-bottom:2px">
+          <span style="display:block; font-family:'Playfair Display',Georgia,serif; font-size:26px; font-weight:700; letter-spacing:0.12em; color:#FFFFFF;">QUANTA</span>
+          <span style="display:block; height:2px; background:#C4922A; margin:4px 0 5px;"></span>
+          <span style="display:block; font-family:'DM Sans',sans-serif; font-size:9px; letter-spacing:0.45em; font-weight:500; color:rgba(255,255,255,0.4); text-transform:uppercase;">Capital Holdings</span>
+        </div>
+        <p>A Canadian investment firm driving growth and value creation through strategic business acquisitions. Toronto, Ontario.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('home'); scrollTo('about')">Our Story</a></li>
+          <li><a href="#" onclick="showPage('home'); scrollTo('pillars')">Our Approach</a></li>
+          <li><a href="#" onclick="showPage('home'); scrollTo('process')">Our Process</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get In Touch</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+          <li><a href="#" onclick="showPage('home'); scrollTo('seller-cta')">Sell Your Business</a></li>
+          <li><a href="mailto:info@quantach.com">info@quantach.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-legal">© 2025 Quanta Capital Holdings Inc. All rights reserved. · <a href="#">Privacy Policy</a> · <a href="#">Terms of Use</a></div>
+      <div class="footer-legal">Toronto, Ontario, Canada</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Page routing ───────────────────────────────
+function showPage(page) {
+  document.getElementById('home-page').style.display = page === 'home' ? 'block' : 'none';
+  document.getElementById('contact-page').style.display = page === 'contact' ? 'block' : 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  localStorage.setItem('qch_page', page);
+}
+
+function scrollTo(id) {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+// ── Nav scroll effect ──────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ── Mobile nav ─────────────────────────────────
+function toggleMobileNav() {
+  const links = document.querySelector('.nav-links');
+  links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+  links.style.flexDirection = 'column';
+  links.style.position = 'absolute';
+  links.style.top = '68px';
+  links.style.left = '0'; links.style.right = '0';
+  links.style.background = '#F7F5F0';
+  links.style.padding = '20px 24px';
+  links.style.borderBottom = '1px solid #E8E4DC';
+  links.style.gap = '16px';
+}
+
+// ── Azure Function endpoint ─────────────────────
+// Replace this with your deployed Azure Function URL
+const FORM_ENDPOINT = 'https://YOUR_FUNCTION_APP.azurewebsites.net/api/submit';
+
+// ── Form helpers ────────────────────────────────
+function setSubmitState(btn, loading) {
+  btn.disabled = loading;
+  btn.textContent = loading ? 'Sending…' : btn.dataset.label;
+}
+
+function showFormError(containerId, msg) {
+  let el = document.getElementById(containerId);
+  if (!el) return;
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// ── Quick form (homepage) ───────────────────────
+async function handleQuickForm(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('.form-submit');
+  if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+  const errEl = document.getElementById('quick-error');
+  if (errEl) errEl.style.display = 'none';
+
+  const inputs = form.querySelectorAll('input, textarea');
+  const [firstName, lastName, email, phone, message] = [...inputs].map(i => i.value.trim());
+
+  setSubmitState(btn, true);
+  try {
+    const res = await fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstName, lastName, email, phone, message })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Submission failed.');
+    document.getElementById('quick-form').style.display = 'none';
+    document.getElementById('quick-success').style.display = 'block';
+  } catch (err) {
+    setSubmitState(btn, false);
+    showFormError('quick-error', err.message || 'Something went wrong. Please try again.');
+  }
+}
+
+// ── Full contact form ───────────────────────────
+async function handleContactForm(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('.cf-submit');
+  if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+  const errEl = document.getElementById('contact-error');
+  if (errEl) errEl.style.display = 'none';
+
+  const get = sel => form.querySelector(sel)?.value.trim() ?? '';
+  const payload = {
+    firstName: get('input[placeholder="Jane"]'),
+    lastName:  get('input[placeholder="Smith"]'),
+    email:     get('input[type="email"]'),
+    phone:     get('input[type="tel"]'),
+    company:   get('input[placeholder="Smith Group Inc."]'),
+    industry:  get('select'),
+    message:   get('textarea')
+  };
+
+  setSubmitState(btn, true);
+  try {
+    const res = await fetch(FORM_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Submission failed.');
+    document.getElementById('contact-form-inner').style.display = 'none';
+    document.getElementById('contact-success').classList.add('show');
+  } catch (err) {
+    setSubmitState(btn, false);
+    showFormError('contact-error', err.message || 'Something went wrong. Please try again.');
+  }
+}
+
+function resetContactForm() {
+  document.getElementById('contact-form-inner').style.display = 'block';
+  document.getElementById('contact-success').classList.remove('show');
+}
+
+// ── Intersection observer for fade-ins ─────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ── Restore last page ──────────────────────────
+const lastPage = localStorage.getItem('qch_page') || 'home';
+showPage(lastPage);
+</script>
+</body>
+</html>

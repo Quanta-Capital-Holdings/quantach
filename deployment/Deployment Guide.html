@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deployment Guide — Quanta Capital Holdings</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: #F7F5F0; color: #1A1612; line-height: 1.6; }
+:root {
+  --navy: #0B1F3A; --gold: #C4922A; --off-white: #F7F5F0;
+  --warm-100: #E8E4DC; --warm-400: #8A8478; --warm-900: #1A1612;
+}
+
+/* Layout */
+.shell { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+.sidebar { background: var(--navy); position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 32px 0; }
+.sidebar-logo { padding: 0 24px 28px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 24px; }
+.wm-main { display: block; font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; letter-spacing: 0.1em; color: white; }
+.wm-bar { display: block; height: 2px; width: 90px; background: var(--gold); margin: 3px 0 4px; }
+.wm-sub { display: block; font-size: 8px; letter-spacing: 0.45em; color: rgba(255,255,255,0.35); text-transform: uppercase; }
+.sidebar nav { padding: 0 16px; }
+.nav-section { font-size: 9px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 0 8px; margin: 20px 0 8px; }
+.nav-link { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 4px; font-size: 13px; color: rgba(255,255,255,0.65); text-decoration: none; cursor: pointer; transition: all 0.15s; margin-bottom: 2px; }
+.nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.08); color: white; }
+.nav-link .step-badge { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; flex-shrink: 0; }
+.nav-link.done .step-badge { background: rgba(196,146,42,0.25); color: var(--gold); }
+.nav-link.active .step-badge { background: var(--gold); color: white; }
+
+/* Main content */
+.main { padding: 0; }
+.page-section { display: none; padding: 48px 56px; max-width: 860px; }
+.page-section.active { display: block; }
+
+/* Typography */
+.eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+h1 { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 500; color: var(--navy); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 12px; }
+h2 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 500; color: var(--navy); margin: 36px 0 14px; }
+h3 { font-size: 14px; font-weight: 600; color: var(--navy); margin: 24px 0 8px; letter-spacing: 0.01em; }
+p { font-size: 15px; line-height: 1.75; color: #5C5448; margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+
+/* Components */
+.lead { font-size: 17px; font-weight: 300; color: var(--warm-400); line-height: 1.7; margin-bottom: 32px; }
+.divider { height: 1px; background: var(--warm-100); margin: 32px 0; }
+
+.arch-diagram { background: var(--navy); border-radius: 8px; padding: 32px; margin: 24px 0; display: flex; align-items: center; justify-content: center; gap: 0; }
+.arch-box { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 14px 18px; text-align: center; min-width: 120px; }
+.arch-box .arch-icon { font-size: 22px; margin-bottom: 6px; }
+.arch-box .arch-name { font-size: 12px; font-weight: 600; color: white; letter-spacing: 0.04em; }
+.arch-box .arch-sub { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+.arch-arrow { color: var(--gold); font-size: 18px; margin: 0 12px; flex-shrink: 0; }
+.arch-box.highlight { border-color: rgba(196,146,42,0.4); background: rgba(196,146,42,0.08); }
+
+.step-card { background: white; border: 1px solid var(--warm-100); border-radius: 6px; padding: 22px 24px; margin-bottom: 14px; }
+.step-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--navy); color: white; font-family: 'Playfair Display', serif; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-title { font-size: 15px; font-weight: 600; color: var(--navy); }
+.step-body p { font-size: 13.5px; line-height: 1.7; color: #5C5448; margin-bottom: 10px; }
+
+code { font-family: 'DM Mono', monospace; font-size: 12.5px; background: var(--warm-100); padding: 2px 6px; border-radius: 3px; color: var(--navy); }
+pre { background: #1A1612; border-radius: 6px; padding: 20px 24px; margin: 14px 0; overflow-x: auto; }
+pre code { background: none; padding: 0; color: #E8E4DC; font-size: 12px; line-height: 1.7; }
+
+.env-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 14px 0; }
+.env-table th { text-align: left; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-400); padding: 8px 12px; border-bottom: 2px solid var(--warm-100); }
+.env-table td { padding: 10px 12px; border-bottom: 1px solid var(--warm-100); vertical-align: top; }
+.env-table td:first-child { font-family: 'DM Mono', monospace; font-size: 11.5px; color: var(--navy); white-space: nowrap; }
+.env-table td:nth-child(2) { color: #5C5448; }
+.env-table tr.required td:first-child::after { content: ' *'; color: var(--gold); }
+.env-table tr:last-child td { border-bottom: none; }
+
+.callout { border-radius: 6px; padding: 16px 18px; margin: 16px 0; font-size: 13.5px; line-height: 1.65; }
+.callout.info { background: #EEF5FB; border: 1px solid #B0CDE6; color: #1A3A60; }
+.callout.warning { background: #FDF8EE; border: 1px solid #EAD49A; color: #6B4A05; }
+.callout.success { background: #EBF5EE; border: 1px solid #A8D5B5; color: #1A4D2E; }
+.callout strong { font-weight: 600; display: block; margin-bottom: 4px; }
+
+.cost-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 16px 0; }
+.cost-card { background: white; border: 1px solid var(--warm-100); border-radius: 6px; padding: 18px; }
+.cost-service { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warm-400); margin-bottom: 6px; }
+.cost-price { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 500; color: var(--navy); line-height: 1; }
+.cost-price span { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 400; color: var(--warm-400); }
+.cost-desc { font-size: 12px; color: var(--warm-400); margin-top: 6px; line-height: 1.5; }
+
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }
+.checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: #5C5448; line-height: 1.5; }
+.checklist li::before { content: '☐'; font-size: 14px; color: var(--warm-400); flex-shrink: 0; margin-top: 1px; }
+
+/* Navigation buttons */
+.nav-buttons { display: flex; gap: 12px; margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--warm-100); }
+.btn-next { background: var(--navy); color: white; padding: 11px 28px; border-radius: 4px; font-size: 14px; font-weight: 500; border: none; cursor: pointer; transition: background 0.2s; }
+.btn-next:hover { background: #1A3A60; }
+.btn-prev { background: transparent; color: var(--navy); padding: 11px 28px; border-radius: 4px; font-size: 14px; font-weight: 500; border: 1.5px solid var(--warm-200); cursor: pointer; transition: all 0.2s; }
+.btn-prev:hover { border-color: var(--navy); }
+
+/* Progress bar */
+.progress-bar { height: 3px; background: var(--warm-100); position: sticky; top: 0; z-index: 10; }
+.progress-fill { height: 100%; background: var(--gold); transition: width 0.3s ease; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="wm-main">QUANTA</span>
+      <span class="wm-bar"></span>
+      <span class="wm-sub">Deployment Guide</span>
+    </div>
+    <nav>
+      <div class="nav-section">Overview</div>
+      <a class="nav-link active" onclick="goTo(0)" href="#">
+        <span class="step-badge">→</span> Architecture
+      </a>
+      <a class="nav-link" onclick="goTo(1)" href="#">
+        <span class="step-badge">→</span> Cost Estimate
+      </a>
+
+      <div class="nav-section">Step-by-Step</div>
+      <a class="nav-link" onclick="goTo(2)" href="#">
+        <span class="step-badge">1</span> Prerequisites
+      </a>
+      <a class="nav-link" onclick="goTo(3)" href="#">
+        <span class="step-badge">2</span> Azure Setup
+      </a>
+      <a class="nav-link" onclick="goTo(4)" href="#">
+        <span class="step-badge">3</span> Deploy Function
+      </a>
+      <a class="nav-link" onclick="goTo(5)" href="#">
+        <span class="step-badge">4</span> SendGrid Email
+      </a>
+      <a class="nav-link" onclick="goTo(6)" href="#">
+        <span class="step-badge">5</span> GitHub Pages
+      </a>
+      <a class="nav-link" onclick="goTo(7)" href="#">
+        <span class="step-badge">6</span> Custom Domain
+      </a>
+
+      <div class="nav-section">Reference</div>
+      <a class="nav-link" onclick="goTo(8)" href="#">
+        <span class="step-badge">⚙</span> Env Variables
+      </a>
+      <a class="nav-link" onclick="goTo(9)" href="#">
+        <span class="step-badge">✓</span> Go-Live Checklist
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:10%"></div></div>
+
+    <!-- 0: Architecture -->
+    <div class="page-section active" id="section-0">
+      <div class="eyebrow">Overview</div>
+      <h1>Architecture</h1>
+      <p class="lead">GitHub Pages hosts your static website for free. An Azure Function handles form submissions — saving to Blob Storage and firing an email alert via SendGrid.</p>
+
+      <div class="arch-diagram">
+        <div class="arch-box">
+          <div class="arch-icon">🌐</div>
+          <div class="arch-name">GitHub Pages</div>
+          <div class="arch-sub">Static HTML/CSS/JS<br>Free · Custom domain</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box highlight">
+          <div class="arch-icon">⚡</div>
+          <div class="arch-name">Azure Function</div>
+          <div class="arch-sub">.NET 10 · HTTP trigger<br>Validate + route</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="arch-box">
+            <div class="arch-icon">🗄️</div>
+            <div class="arch-name">Blob Storage</div>
+            <div class="arch-sub">JSON per submission<br>~$0/month</div>
+          </div>
+          <div class="arch-box">
+            <div class="arch-icon">📧</div>
+            <div class="arch-name">SendGrid</div>
+            <div class="arch-sub">Email alert to you<br>Free tier</div>
+          </div>
+        </div>
+      </div>
+
+      <h2>How a form submission flows</h2>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">1</div><div class="step-title">Visitor fills the form on quantach.com (GitHub Pages)</div></div>
+        <div class="step-body"><p>The HTML page makes a <code>fetch()</code> POST request to your Azure Function URL with the form data as JSON.</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">2</div><div class="step-title">Azure Function validates the input</div></div>
+        <div class="step-body"><p>Checks that first name, last name, email, and phone are present and valid. Returns a <code>422</code> error with a user-friendly message if not.</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">3</div><div class="step-title">Submission saved to Azure Blob Storage</div></div>
+        <div class="step-body"><p>A JSON file is written to <code>form-submissions/YYYY-MM-DD/HH-MM-SS_LastName.json</code>. You can browse submissions in the Azure Portal at any time.</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">4</div><div class="step-title">Email alert sent via SendGrid</div></div>
+        <div class="step-body"><p>A branded HTML email with all submission details — and a one-click Reply button — is sent to <code>info@quantach.com</code>.</p></div>
+      </div>
+      <div class="nav-buttons">
+        <button class="btn-next" onclick="goTo(1)">Next: Cost Estimate →</button>
+      </div>
+    </div>
+
+    <!-- 1: Cost -->
+    <div class="page-section" id="section-1">
+      <div class="eyebrow">Overview</div>
+      <h1>Cost Estimate</h1>
+      <p class="lead">This entire stack runs for effectively nothing at typical small-business contact form volume.</p>
+      <div class="cost-grid">
+        <div class="cost-card">
+          <div class="cost-service">GitHub Pages</div>
+          <div class="cost-price">$0 <span>/ month</span></div>
+          <div class="cost-desc">Free forever for public repos. Custom domain (quantach.com) included.</div>
+        </div>
+        <div class="cost-card">
+          <div class="cost-service">Azure Function</div>
+          <div class="cost-price">$0 <span>/ month</span></div>
+          <div class="cost-desc">Consumption plan: first 1,000,000 executions free every month. Form submissions are tiny.</div>
+        </div>
+        <div class="cost-card">
+          <div class="cost-service">Azure Blob Storage</div>
+          <div class="cost-price">~$0.01 <span>/ month</span></div>
+          <div class="cost-desc">10,000 JSON submissions ≈ ~5 MB. At $0.02/GB that's fractions of a cent.</div>
+        </div>
+        <div class="cost-card">
+          <div class="cost-service">SendGrid</div>
+          <div class="cost-price">$0 <span>/ month</span></div>
+          <div class="cost-desc">Free tier: 100 emails/day. More than enough for contact form alerts.</div>
+        </div>
+        <div class="cost-card">
+          <div class="cost-service">Custom Domain</div>
+          <div class="cost-price">~$12 <span>/ year</span></div>
+          <div class="cost-desc">If you don't already own quantach.com — register via Namecheap, Google Domains, or GoDaddy.</div>
+        </div>
+        <div class="cost-card" style="border-color:#C4922A; background:#FDFAF0;">
+          <div class="cost-service" style="color:var(--gold)">Total</div>
+          <div class="cost-price" style="color:var(--gold)">~$1 <span>/ month</span></div>
+          <div class="cost-desc">Effectively free. Scale up to Azure Static Web Apps + paid tiers only when you need to.</div>
+        </div>
+      </div>
+      <div class="nav-buttons">
+        <button class="btn-prev" onclick="goTo(0)">← Back</button>
+        <button class="btn-next" onclick="goTo(2)">Next: Prerequisites →</button>
+      </div>
+    </div>
+
+    <!-- 2: Prerequisites -->
+    <div class="page-section" id="section-2">
+      <div class="eyebrow">Step 1</div>
+      <h1>Prerequisites</h1>
+      <p class="lead">Install and create these before starting. Each takes under 5 minutes.</p>
+
+      <h2>Software to install</h2>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">A</div><div class="step-title">.NET 10 SDK</div></div>
+        <div class="step-body"><p>Download from <code>https://dotnet.microsoft.com/download/dotnet/10.0</code> — choose the SDK (not Runtime). Verify with:</p>
+        <pre><code>dotnet --version
+# should show 10.x.x</code></pre></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">B</div><div class="step-title">Azure Functions Core Tools v4</div></div>
+        <div class="step-body">
+        <pre><code>npm install -g azure-functions-core-tools@4 --unsafe-perm true
+# or on Mac: brew tap azure/functions && brew install azure-functions-core-tools@4</code></pre></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">C</div><div class="step-title">Azure CLI</div></div>
+        <div class="step-body"><p>Download from <code>https://learn.microsoft.com/en-us/cli/azure/install-azure-cli</code>. Log in with:</p>
+        <pre><code>az login</code></pre></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">D</div><div class="step-title">Git + GitHub account</div></div>
+        <div class="step-body"><p>You'll need a GitHub account to host the static site. Create one at <code>github.com</code> if you don't have one.</p></div>
+      </div>
+
+      <div class="callout info"><strong>Azure Subscription</strong>You'll need an Azure subscription. If you don't have one, create a free account at <code>portal.azure.com</code> — it includes $200 in credits for 30 days.</div>
+
+      <div class="nav-buttons">
+        <button class="btn-prev" onclick="goTo(1)">← Back</button>
+        <button class="btn-next" onclick="goTo(3)">Next: Azure Setup →</button>
+      </div>
+    </div>
+
+    <!-- 3: Azure Setup -->
+    <div class="page-section" id="section-3">
+      <div class="eyebrow">Step 2</div>
+      <h1>Azure Setup</h1>
+      <p class="lead">Create the Resource Group, Storage Account, and Function App in Azure. Run these commands in your terminal.</p>
+
+      <h3>1. Set your variables</h3>
+      <pre><code># Choose names — must be globally unique for storage + function app
+RESOURCE_GROUP="quanta-rg"
+LOCATION="canadacentral"
+STORAGE_ACCOUNT="quantaforms"        # lowercase, no hyphens, max 24 chars
+FUNCTION_APP="quanta-form-handler"   # your function app name
+CONTAINER_NAME="form-submissions"</code></pre>
+
+      <h3>2. Create Resource Group</h3>
+      <pre><code>az group create \
+  --name $RESOURCE_GROUP \
+  --location $LOCATION</code></pre>
+
+      <h3>3. Create Storage Account</h3>
+      <pre><code>az storage account create \
+  --name $STORAGE_ACCOUNT \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION \
+  --sku Standard_LRS \
+  --kind StorageV2</code></pre>
+
+      <h3>4. Create the Blob container</h3>
+      <pre><code>az storage container create \
+  --name $CONTAINER_NAME \
+  --account-name $STORAGE_ACCOUNT \
+  --auth-mode login</code></pre>
+
+      <h3>5. Create the Function App</h3>
+      <pre><code>az functionapp create \
+  --resource-group $RESOURCE_GROUP \
+  --consumption-plan-location $LOCATION \
+  --runtime dotnet-isolated \
+  --runtime-version 10 \
+  --functions-version 4 \
+  --name $FUNCTION_APP \
+  --storage-account $STORAGE_ACCOUNT \
+  --os-type Linux</code></pre>
+
+      <div class="callout success"><strong>✓ Checkpoint</strong>You should now see the Function App in your Azure Portal under the resource group <code>quanta-rg</code>.</div>
+
+      <div class="nav-buttons">
+        <button class="btn-prev" onclick="goTo(2)">← Back</button>
+        <button class="btn-next" onclick="goTo(4)">Next: Deploy Function →</button>
+      </div>
+    </div>
+
+    <!-- 4: Deploy Function -->
+    <div class="page-section" id="section-4">
+      <div class="eyebrow">Step 3</div>
+      <h1>Deploy the Function</h1>
+      <p class="lead">Build and publish the .NET 10 Azure Function from the <code>deployment/azure-function/</code> folder in your project.</p>
+
+      <h3>1. Navigate to the function folder</h3>
+      <pre><code>cd deployment/azure-function</code></pre>
+
+      <h3>2. Test locally (optional but recommended)</h3>
+      <pre><code># Make sure Azurite (local storage emulator) is running, or use a real connection string
+func start</code></pre>
+      <p>The function will be available at <code>http://localhost:7071/api/submit</code>. Test it with curl:</p>
+      <pre><code>curl -X POST http://localhost:7071/api/submit \
+  -H "Content-Type: application/json" \
+  -d '{"firstName":"Jane","lastName":"Smith","email":"jane@test.com","phone":"+14165550100","message":"Test"}'</code></pre>
+
+      <h3>3. Publish to Azure</h3>
+      <pre><code>func azure functionapp publish quanta-form-handler --dotnet-isolated</code></pre>
+
+      <h3>4. Set environment variables in Azure</h3>
+      <pre><code>az functionapp config appsettings set \
+  --name quanta-form-handler \
+  --resource-group quanta-rg \
+  --settings \
+    "BlobContainerName=form-submissions" \
+    "SendGridApiKey=SG.YOUR_KEY_HERE" \
+    "AlertEmailTo=info@quantach.com" \
+    "AlertEmailFrom=noreply@quantach.com" \
+    "AllowedOrigin=https://YOUR_GITHUB_USERNAME.github.io"</code></pre>
+
+      <h3>5. Get your Function URL</h3>
+      <pre><code>az functionapp function show \
+  --name quanta-form-handler \
+  --resource-group quanta-rg \
+  --function-name SubmitForm \
+  --query "invokeUrlTemplate" -o tsv</code></pre>
+      <p>Copy this URL — you'll paste it into the website's <code>FORM_ENDPOINT</code> constant in the next step.</p>
+
+      <div class="callout warning"><strong>Update the website</strong>Open <code>ui_kits/website/index.html</code> and replace the placeholder in the <code>FORM_ENDPOINT</code> constant at the top of the <code>&lt;script&gt;</code> block with your real Azure Function URL.</div>
+
+      <div class="nav-buttons">
+        <button class="btn-prev" onclick="goTo(3)">← Back</button>
+        <button class="btn-next" onclick="goTo(5)">Next: SendGrid →</button>
+      </div>
+    </div>
+
+    <!-- 5: SendGrid -->
+    <div class="page-section" id="section-5">
+      <div class="eyebrow">Step 4</div>
+      <h1>SendGrid Email Alerts</h1>
+      <p class="lead">SendGrid's free tier sends up to 100 emails/day — more than enough. Setup takes about 10 minutes.</p>
+
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">1</div><div class="step-title">Create a SendGrid account</div></div>
+        <div class="step-body"><p>Go to <code>sendgrid.com</code> → Sign up for the free plan. Verify your email.</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">2</div><div class="step-title">Create an API Key</div></div>
+        <div class="step-body"><p>In SendGrid: Settings → API Keys → Create API Key → choose <strong>Restricted Access</strong> → enable <strong>Mail Send</strong> → Create. Copy the key immediately (shown once).</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">3</div><div class="step-title">Verify your sender email</div></div>
+        <div class="step-body"><p>Settings → Sender Authentication → Single Sender Verification → add <code>noreply@quantach.com</code> (or any email you control). Verify via the email SendGrid sends you.</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">4</div><div class="step-title">Add the API key to Azure</div></div>
+        <div class="step-body">
+        <pre><code>az functionapp config appsettings set \
+  --name quanta-form-handler \
+  --resource-group quanta-rg \
+  --settings "SendGridApiKey=SG.YOUR_ACTUAL_KEY"</code></pre></div>
+      </div>
+
+      <div class="callout info"><strong>What the email looks like</strong>Each submission triggers a branded HTML email with the sender's name, email (clickable), phone, company, industry, and message — plus a one-click "Reply to [Name]" button. See <code>SubmitFormFunction.cs → BuildEmailHtml()</code> to customise the template.</div>
+
+      <div class="nav-buttons">
+        <button class="btn-prev" onclick="goTo(4)">← Back</button>
+        <button class="btn-next" onclick="goTo(6)">Next: GitHub Pages →</button>
+      </div>
+    </div>
+
+    <!-- 6: GitHub Pages -->
+    <div class="page-section" id="section-6">
+      <div class="eyebrow">Step 5</div>
+      <h1>GitHub Pages</h1>
+      <p class="lead">Host the static website for free. All you need is a GitHub account and a public repository.</p>
+
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">1</div><div class="step-title">Create a GitHub repository</div></div>
+        <div class="step-body"><p>Go to <code>github.com/new</code> → name it <code>quantach-website</code> → set to <strong>Public</strong> → Create. (Must be public for free GitHub Pages.)</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">2</div><div class="step-title">Copy the website files</div></div>
+        <div class="step-body"><p>Your website files to commit are:</p>
+        <pre><code>index.html          ← rename from ui_kits/website/index.html
+assets/
+  logo.svg
+  logo-white.svg
+  logo-mark.svg
+colors_and_type.css</code></pre>
+        <p>Make sure <code>FORM_ENDPOINT</code> in <code>index.html</code> points to your Azure Function URL before committing.</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">3</div><div class="step-title">Push to GitHub</div></div>
+        <div class="step-body">
+        <pre><code>git init
+git add .
+git commit -m "Initial website launch"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/quantach-website.git
+git push -u origin main</code></pre></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">4</div><div class="step-title">Enable GitHub Pages</div></div>
+        <div class="step-body"><p>In your GitHub repo: Settings → Pages → Source: <strong>Deploy from a branch</strong> → Branch: <strong>main</strong> → Folder: <strong>/ (root)</strong> → Save.</p>
+        <p>Your site will be live at <code>https://YOUR_USERNAME.github.io/quantach-website/</code> in ~2 minutes.</p></div>
+      </div>
+
+      <div class="callout success"><strong>✓ Test the form</strong>Open your live GitHub Pages URL, fill out the contact form, and verify: (1) the page shows the success message, (2) a JSON file appears in your Azure Blob container, (3) you receive the email alert.</div>
+
+      <div class="nav-buttons">
+        <button class="btn-prev" onclick="goTo(5)">← Back</button>
+        <button class="btn-next" onclick="goTo(7)">Next: Custom Domain →</button>
+      </div>
+    </div>
+
+    <!-- 7: Custom Domain -->
+    <div class="page-section" id="section-7">
+      <div class="eyebrow">Step 6</div>
+      <h1>Custom Domain</h1>
+      <p class="lead">Point quantach.com to your GitHub Pages site. Takes ~10 minutes + up to 24h DNS propagation.</p>
+
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">1</div><div class="step-title">Add a CNAME file to your repo</div></div>
+        <div class="step-body"><p>Create a file named exactly <code>CNAME</code> (no extension) in your repo root with one line:</p>
+        <pre><code>quantach.com</code></pre></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">2</div><div class="step-title">Add DNS records at your registrar</div></div>
+        <div class="step-body"><p>Log into your domain registrar (GoDaddy, Namecheap, etc.) and add these records:</p>
+        <pre><code># For root domain (quantach.com) — add 4 A records:
+A    @    185.199.108.153
+A    @    185.199.109.153
+A    @    185.199.110.153
+A    @    185.199.111.153
+
+# For www subdomain — add 1 CNAME:
+CNAME    www    YOUR_USERNAME.github.io</code></pre></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">3</div><div class="step-title">Configure in GitHub</div></div>
+        <div class="step-body"><p>In your repo: Settings → Pages → Custom domain → enter <code>quantach.com</code> → Save. Check <strong>Enforce HTTPS</strong> once DNS propagates (GitHub provides a free SSL certificate via Let's Encrypt).</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-header"><div class="step-num">4</div><div class="step-title">Update AllowedOrigin in Azure</div></div>
+        <div class="step-body"><p>Once your domain is live, update the CORS setting so the Azure Function only accepts requests from your real domain:</p>
+        <pre><code>az functionapp config appsettings set \
+  --name quanta-form-handler \
+  --resource-group quanta-rg \
+  --settings "AllowedOrigin=https://quantach.com"</code></pre></div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn-prev" onclick="goTo(6)">← Back</button>
+        <button class="btn-next" onclick="goTo(8)">Next: Env Variables →</button>
+      </div>
+    </div>
+
+    <!-- 8: Env Variables -->
+    <div class="page-section" id="section-8">
+      <div class="eyebrow">Reference</div>
+      <h1>Environment Variables</h1>
+      <p class="lead">All configuration for the Azure Function lives in App Settings (environment variables). Set them via the Azure CLI commands shown in Step 3, or through the Azure Portal.</p>
+
+      <table class="env-table">
+        <thead>
+          <tr><th>Variable</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr class="required">
+            <td>AzureWebJobsStorage</td>
+            <td>Connection string for the Azure Storage Account. Set automatically when you create the Function App linked to a storage account.</td>
+            <td><code>DefaultEndpointsProtocol=https;AccountName=…</code></td>
+          </tr>
+          <tr>
+            <td>BlobContainerName</td>
+            <td>Name of the blob container where submissions are saved. Defaults to <code>form-submissions</code>.</td>
+            <td><code>form-submissions</code></td>
+          </tr>
+          <tr class="required">
+            <td>SendGridApiKey</td>
+            <td>Your SendGrid API key. If omitted, email alerts are skipped (submissions still save to blob).</td>
+            <td><code>SG.xxxxxxxxxxxx</code></td>
+          </tr>
+          <tr>
+            <td>AlertEmailTo</td>
+            <td>Email address that receives the alert. Defaults to <code>info@quantach.com</code>.</td>
+            <td><code>info@quantach.com</code></td>
+          </tr>
+          <tr>
+            <td>AlertEmailFrom</td>
+            <td>Verified SendGrid sender address. Must be verified in SendGrid.</td>
+            <td><code>noreply@quantach.com</code></td>
+          </tr>
+          <tr>
+            <td>AllowedOrigin</td>
+            <td>CORS allowed origin. Set to your domain in production. Defaults to <code>*</code> (any origin).</td>
+            <td><code>https://quantach.com</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px; color:var(--warm-400); margin-top:8px;">* Required fields.</p>
+
+      <div class="callout warning"><strong>Never commit secrets to Git</strong>The <code>local.settings.json</code> file is already listed in <code>.gitignore</code> by Azure Functions tooling. Never commit API keys or connection strings to your repository.</div>
+
+      <div class="nav-buttons">
+        <button class="btn-prev" onclick="goTo(7)">← Back</button>
+        <button class="btn-next" onclick="goTo(9)">Next: Go-Live Checklist →</button>
+      </div>
+    </div>
+
+    <!-- 9: Checklist -->
+    <div class="page-section" id="section-9">
+      <div class="eyebrow">Reference</div>
+      <h1>Go-Live Checklist</h1>
+      <p class="lead">Run through this before announcing the new site. Tick each item off as you complete it.</p>
+
+      <h2>Azure Function</h2>
+      <ul class="checklist">
+        <li>Function App created in <code>canadacentral</code> region</li>
+        <li>Blob container <code>form-submissions</code> exists</li>
+        <li>All environment variables set (AzureWebJobsStorage, SendGridApiKey, AlertEmailTo, AllowedOrigin)</li>
+        <li>Test submission via curl returns <code>{"success":true}</code></li>
+        <li>JSON file appears in Blob Storage after test</li>
+        <li>Email alert received at info@quantach.com</li>
+      </ul>
+
+      <h2>Website</h2>
+      <ul class="checklist">
+        <li><code>FORM_ENDPOINT</code> in index.html points to real Azure Function URL (not placeholder)</li>
+        <li>Contact form submits successfully in browser — success message shown</li>
+        <li>Form shows error message when phone is left blank</li>
+        <li>Site looks correct on mobile (375px viewport)</li>
+        <li>All nav links scroll to correct sections</li>
+        <li>Footer copyright year is correct (2025)</li>
+        <li>No <code>console.error</code> in browser dev tools</li>
+      </ul>
+
+      <h2>Domain & SEO</h2>
+      <ul class="checklist">
+        <li>quantach.com resolves to GitHub Pages</li>
+        <li>HTTPS enforced — padlock shows in browser</li>
+        <li>www.quantach.com redirects to quantach.com</li>
+        <li>Site registered in <a href="https://search.google.com/search-console" style="color:var(--navy)">Google Search Console</a></li>
+        <li>Google Analytics 4 or Plausible tracking code added</li>
+        <li>Page title and meta description are set correctly</li>
+      </ul>
+
+      <h2>Content</h2>
+      <ul class="checklist">
+        <li>Statistics ($2.4B, 40+ acquisitions) replaced with real numbers</li>
+        <li>Phone number +1 (416) 555-0100 replaced with real number</li>
+        <li>"Est. 2025" confirmed correct</li>
+        <li>Privacy Policy page created and linked in footer</li>
+        <li>Terms of Use page created and linked in footer</li>
+      </ul>
+
+      <div class="callout success"><strong>🚀 You're live!</strong>Share quantach.com with confidence. Submissions will land in your Blob Storage and your inbox within seconds.</div>
+
+      <div class="nav-buttons">
+        <button class="btn-prev" onclick="goTo(8)">← Back</button>
+        <button class="btn-next" onclick="goTo(0)" style="background:var(--gold)">↩ Back to start</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const SECTIONS = 10;
+let current = parseInt(localStorage.getItem('qch_deploy_section') || '0');
+
+function goTo(n) {
+  document.querySelector('.page-section.active')?.classList.remove('active');
+  document.querySelectorAll('.nav-link').forEach((l,i) => {
+    l.classList.toggle('active', i === n);
+    if (i < n) l.classList.add('done');
+  });
+  document.getElementById('section-' + n).classList.add('active');
+  document.getElementById('progress').style.width = ((n + 1) / SECTIONS * 100) + '%';
+  document.querySelector('.main').scrollTop = 0;
+  current = n;
+  localStorage.setItem('qch_deploy_section', n);
+}
+
+goTo(current);
+</script>
+</body>
+</html>

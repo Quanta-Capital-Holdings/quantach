@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; background: var(--bg-primary); padding: 24px 28px; font-family: var(--font-sans); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .card { background: white; border: 1px solid var(--border-default); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 24px; }
+  .card-icon { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--color-navy-50); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+  .card-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-accent); margin-bottom: 6px; }
+  .card-title { font-family: var(--font-display); font-size: 18px; font-weight: 500; color: var(--color-navy-800); margin: 0 0 8px; line-height: 1.3; }
+  .card-body { font-size: 13px; line-height: 1.65; color: var(--fg-secondary); margin: 0; }
+  .card-link { font-size: 12px; font-weight: 600; color: var(--color-navy-800); text-decoration: none; margin-top: 14px; display: inline-block; letter-spacing: 0.02em; border-bottom: 1.5px solid var(--color-gold-600); padding-bottom: 1px; }
+  /* Stat card */
+  .stat-card { background: var(--color-navy-800); border-radius: var(--radius-md); padding: 24px; color: white; }
+  .stat-num { font-family: var(--font-display); font-size: 40px; font-weight: 500; color: white; line-height: 1; margin-bottom: 4px; }
+  .stat-num span { color: var(--color-gold-400); }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.6); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; }
+  /* Testimonial card */
+  .quote-card { background: var(--color-gold-50); border: 1px solid var(--color-gold-200); border-radius: var(--radius-md); padding: 24px; }
+  .quote-mark { font-family: var(--font-display); font-size: 48px; color: var(--color-gold-300); line-height: 0.8; margin-bottom: 8px; }
+  .quote-text { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--color-navy-800); line-height: 1.6; margin: 0 0 12px; }
+  .quote-attr { font-size: 11px; font-weight: 600; color: var(--fg-secondary); letter-spacing: 0.06em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="card">
+    <div class="card-eyebrow">Our Approach</div>
+    <div class="card-title">Strategic Acquisitions</div>
+    <p class="card-body">We identify high-potential companies with solid fundamentals and untapped growth opportunities.</p>
+    <a class="card-link" href="#">Learn more →</a>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">$<span>2.4</span>B</div>
+    <div class="stat-label">Assets under management</div>
+    <div style="margin-top:20px;border-top:1px solid rgba(255,255,255,0.1);padding-top:16px">
+      <div class="stat-num" style="font-size:28px">40<span>+</span></div>
+      <div class="stat-label">Portfolio companies</div>
+    </div>
+  </div>
+  <div class="quote-card">
+    <div class="quote-mark">"</div>
+    <p class="quote-text">Quanta's team brought both capital and genuine operational expertise. The transition was seamless.</p>
+    <div class="quote-attr">— Former CEO, Regional Logistics Co.</div>
+  </div>
+</div>
+</body>
+</html>

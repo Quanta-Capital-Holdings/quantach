@@ -1,0 +1,217 @@
+/* ============================================================
+   QUANTA CAPITAL HOLDINGS — Design Tokens
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+/* ── Base Color Palette ────────────────────────────── */
+:root {
+  --color-navy-900:   #071529;
+  --color-navy-800:   #0B1F3A;   /* primary brand navy */
+  --color-navy-700:   #122948;
+  --color-navy-600:   #1A3A60;
+  --color-navy-500:   #2A527F;
+  --color-navy-400:   #4A7AAF;
+  --color-navy-300:   #7AAAD4;
+  --color-navy-200:   #B0CDE6;
+  --color-navy-100:   #D8E8F4;
+  --color-navy-50:    #EEF5FB;
+
+  --color-gold-900:   #6B4A05;
+  --color-gold-800:   #8B6210;
+  --color-gold-700:   #A87A1A;
+  --color-gold-600:   #C4922A;   /* primary brand gold */
+  --color-gold-500:   #D4A84A;
+  --color-gold-400:   #DFC070;
+  --color-gold-300:   #EAD49A;
+  --color-gold-200:   #F2E5BC;
+  --color-gold-100:   #F8F2DC;
+  --color-gold-50:    #FDFAF0;
+
+  --color-warm-900:   #1A1612;
+  --color-warm-800:   #2C2620;
+  --color-warm-700:   #403A32;
+  --color-warm-600:   #5C5448;
+  --color-warm-500:   #7A7060;
+  --color-warm-400:   #8A8478;   /* secondary text */
+  --color-warm-300:   #B0A898;
+  --color-warm-200:   #D2CCBF;
+  --color-warm-100:   #E8E4DC;   /* light separator */
+  --color-warm-50:    #F7F5F0;   /* off-white background */
+
+  --color-white:      #FFFFFF;
+  --color-black:      #000000;
+
+  /* Status colors */
+  --color-success:    #2D7A4F;
+  --color-warning:    #C4922A;
+  --color-error:      #B33A3A;
+
+/* ── Semantic Color Vars ───────────────────────────── */
+  --bg-primary:       var(--color-warm-50);
+  --bg-secondary:     var(--color-white);
+  --bg-inverse:       var(--color-navy-800);
+  --bg-accent:        var(--color-gold-100);
+  --bg-subtle:        var(--color-warm-100);
+
+  --fg-primary:       var(--color-warm-900);
+  --fg-secondary:     var(--color-warm-400);
+  --fg-inverse:       var(--color-white);
+  --fg-accent:        var(--color-gold-600);
+  --fg-muted:         var(--color-warm-300);
+  --fg-brand:         var(--color-navy-800);
+
+  --border-default:   var(--color-warm-100);
+  --border-strong:    var(--color-warm-200);
+  --border-inverse:   rgba(255,255,255,0.15);
+  --border-accent:    var(--color-gold-600);
+
+  --shadow-sm:        0 1px 4px rgba(11,31,58,0.06);
+  --shadow-md:        0 2px 12px rgba(11,31,58,0.08);
+  --shadow-lg:        0 8px 32px rgba(11,31,58,0.12);
+  --shadow-xl:        0 20px 60px rgba(11,31,58,0.18);
+
+/* ── Typography ────────────────────────────────────── */
+  --font-display:     'Playfair Display', Georgia, serif;
+  --font-sans:        'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:        'DM Mono', 'Courier New', monospace;
+
+  /* Scale (Major Third — 1.25) */
+  --text-xs:          0.64rem;    /* 10.24px */
+  --text-sm:          0.8rem;     /* 12.8px  */
+  --text-base:        1rem;       /* 16px    */
+  --text-md:          1.25rem;    /* 20px    */
+  --text-lg:          1.563rem;   /* 25px    */
+  --text-xl:          1.953rem;   /* 31px    */
+  --text-2xl:         2.441rem;   /* 39px    */
+  --text-3xl:         3.052rem;   /* 49px    */
+  --text-4xl:         3.815rem;   /* 61px    */
+  --text-5xl:         4.768rem;   /* 76px    */
+
+  /* Line heights */
+  --leading-tight:    1.15;
+  --leading-snug:     1.3;
+  --leading-normal:   1.55;
+  --leading-relaxed:  1.75;
+
+  /* Letter spacing */
+  --tracking-tight:   -0.03em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.05em;
+  --tracking-wider:   0.12em;
+  --tracking-caps:    0.15em;
+
+  /* Font weights */
+  --fw-light:         300;
+  --fw-regular:       400;
+  --fw-medium:        500;
+  --fw-semibold:      600;
+  --fw-bold:          700;
+
+/* ── Spacing ───────────────────────────────────────── */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-32:  128px;
+
+  /* Layout */
+  --max-width:        1200px;
+  --max-width-text:   720px;
+  --section-pad-y:    var(--space-20);
+  --section-pad-x:    var(--space-6);
+
+/* ── Radii ─────────────────────────────────────────── */
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+
+/* ── Transitions ───────────────────────────────────── */
+  --transition-fast:   150ms ease;
+  --transition-base:   250ms ease;
+  --transition-slow:   400ms ease;
+}
+
+/* ── Semantic Typographic Roles ────────────────────── */
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-brand);
+}
+h2, .h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-brand);
+}
+h3, .h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--fw-medium);
+  line-height: var(--leading-snug);
+  color: var(--fg-brand);
+}
+h4, .h4 {
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  font-weight: var(--fw-semibold);
+  line-height: var(--leading-normal);
+  color: var(--fg-primary);
+}
+p, .body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--fw-regular);
+  line-height: var(--leading-relaxed);
+  color: var(--fg-primary);
+}
+.body-lg {
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  font-weight: var(--fw-light);
+  line-height: var(--leading-relaxed);
+  color: var(--fg-primary);
+}
+.caption {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--fg-secondary);
+  line-height: var(--leading-normal);
+}
+.label {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--fg-secondary);
+}
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--fg-primary);
+}

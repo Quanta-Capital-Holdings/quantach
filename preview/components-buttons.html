@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; background: var(--bg-primary); padding: 24px 28px; font-family: var(--font-sans); }
+  .row { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+  .section-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: var(--fg-secondary); margin-bottom: 12px; }
+  /* Button styles */
+  .btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-sans); font-weight: 500; cursor: pointer; border: none; transition: all 0.2s ease; text-decoration: none; }
+  .btn-primary { background: var(--color-navy-800); color: white; padding: 12px 28px; font-size: 14px; letter-spacing: 0.03em; border-radius: var(--radius-md); }
+  .btn-primary:hover { background: var(--color-navy-700); }
+  .btn-gold { background: var(--color-gold-600); color: white; padding: 12px 28px; font-size: 14px; letter-spacing: 0.03em; border-radius: var(--radius-md); }
+  .btn-outline { background: transparent; color: var(--color-navy-800); padding: 11px 27px; font-size: 14px; letter-spacing: 0.03em; border-radius: var(--radius-md); border: 1.5px solid var(--color-navy-800); }
+  .btn-outline-gold { background: transparent; color: var(--color-gold-600); padding: 11px 27px; font-size: 14px; letter-spacing: 0.03em; border-radius: var(--radius-md); border: 1.5px solid var(--color-gold-600); }
+  .btn-ghost { background: transparent; color: var(--color-navy-800); padding: 12px 20px; font-size: 14px; border-radius: var(--radius-md); text-decoration: underline; text-underline-offset: 3px; }
+  .btn-sm { padding: 8px 18px; font-size: 12px; }
+  .btn-lg { padding: 16px 36px; font-size: 16px; }
+  .btn-inverse { background: white; color: var(--color-navy-800); padding: 12px 28px; font-size: 14px; border-radius: var(--radius-md); }
+  .btn-disabled { background: var(--color-warm-200); color: var(--color-warm-400); padding: 12px 28px; font-size: 14px; border-radius: var(--radius-md); cursor: not-allowed; }
+  .dark-bg { background: var(--color-navy-800); padding: 16px; border-radius: var(--radius-md); }
+</style>
+</head>
+<body>
+<div class="section-label">Primary Buttons</div>
+<div class="row">
+  <button class="btn btn-primary btn-sm">Connect Now</button>
+  <button class="btn btn-primary">Schedule a Call</button>
+  <button class="btn btn-primary btn-lg">Begin Conversation</button>
+</div>
+
+<div class="section-label">Gold Accent</div>
+<div class="row">
+  <button class="btn btn-gold btn-sm">Explore Opportunities</button>
+  <button class="btn btn-gold">Sell Your Business</button>
+</div>
+
+<div class="section-label">Outlined</div>
+<div class="row">
+  <button class="btn btn-outline">Learn More</button>
+  <button class="btn btn-outline-gold">View Our Approach</button>
+</div>
+
+<div class="section-label">Ghost / Text</div>
+<div class="row">
+  <button class="btn btn-ghost">See case studies →</button>
+  <button class="btn btn-disabled">Submit</button>
+</div>
+
+<div class="section-label">On Dark</div>
+<div class="dark-bg">
+  <div class="row" style="margin-bottom:0">
+    <button class="btn btn-gold">Get In Touch</button>
+    <button class="btn btn-inverse">Learn More</button>
+    <button class="btn btn-ghost" style="color:rgba(255,255,255,0.7)">View approach →</button>
+  </div>
+</div>
+</body>
+</html>
