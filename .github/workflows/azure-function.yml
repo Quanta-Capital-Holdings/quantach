@@ -67,7 +67,12 @@ jobs:
 
       - name: Generate SAS URL and set WEBSITE_RUN_FROM_PACKAGE
         run: |
-          EXPIRY=$(date -u -d "2 years" '+%Y-%m-%dT%H:%MZ')
+          ACCOUNT_KEY=$(az storage account keys list \
+            --account-name ${{ env.STORAGE_ACCOUNT }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --query "[0].value" -o tsv)
+
+          EXPIRY=$(date -u -d "5 years" '+%Y-%m-%dT%H:%MZ')
 
           SAS=$(az storage blob generate-sas \
             --account-name ${{ env.STORAGE_ACCOUNT }} \
@@ -75,8 +80,7 @@ jobs:
             --name function-${{ github.sha }}.zip \
             --permissions r \
             --expiry "$EXPIRY" \
-            --auth-mode login \
-            --as-user \
+            --account-key "$ACCOUNT_KEY" \
             -o tsv)
 
           BLOB_URL="https://${{ env.STORAGE_ACCOUNT }}.blob.core.windows.net/${{ env.DEPLOY_CONTAINER }}/function-${{ github.sha }}.zip?${SAS}"
