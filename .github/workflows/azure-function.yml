@@ -11,7 +11,9 @@ on:
 env:
   PROJECT_PATH: deployment/azure-function/Quanta.Forms.csproj
   DOTNET_VERSION: '10.0.x'
-  PUBLISH_DIR: ${{ github.workspace }}/publish
+  STORAGE_ACCOUNT: stquantachforms
+  DEPLOY_CONTAINER: deployments
+  RESOURCE_GROUP: GenericForms
 
 permissions:
   id-token: write
@@ -35,10 +37,10 @@ jobs:
         run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
 
       - name: Publish
-        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --no-build -o ${{ env.PUBLISH_DIR }}
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --no-build -o publish
 
       - name: Zip publish output
-        run: cd ${{ env.PUBLISH_DIR }} && zip -r ${{ github.workspace }}/function.zip .
+        run: cd publish && zip -r ${{ github.workspace }}/function.zip .
 
       - name: Login to Azure (OIDC)
         uses: azure/login@v2
@@ -47,11 +49,46 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Deploy to Azure Functions
+      - name: Upload zip to blob storage
         run: |
-          az functionapp deploy \
+          az storage container create \
+            --name ${{ env.DEPLOY_CONTAINER }} \
+            --account-name ${{ env.STORAGE_ACCOUNT }} \
+            --auth-mode login \
+            --output none 2>/dev/null || true
+
+          az storage blob upload \
+            --account-name ${{ env.STORAGE_ACCOUNT }} \
+            --container-name ${{ env.DEPLOY_CONTAINER }} \
+            --name function-${{ github.sha }}.zip \
+            --file ${{ github.workspace }}/function.zip \
+            --auth-mode login \
+            --overwrite
+
+      - name: Generate SAS URL and set WEBSITE_RUN_FROM_PACKAGE
+        run: |
+          EXPIRY=$(date -u -d "2 years" '+%Y-%m-%dT%H:%MZ')
+
+          SAS=$(az storage blob generate-sas \
+            --account-name ${{ env.STORAGE_ACCOUNT }} \
+            --container-name ${{ env.DEPLOY_CONTAINER }} \
+            --name function-${{ github.sha }}.zip \
+            --permissions r \
+            --expiry "$EXPIRY" \
+            --auth-mode login \
+            --as-user \
+            -o tsv)
+
+          BLOB_URL="https://${{ env.STORAGE_ACCOUNT }}.blob.core.windows.net/${{ env.DEPLOY_CONTAINER }}/function-${{ github.sha }}.zip?${SAS}"
+
+          az functionapp config appsettings set \
             --name ${{ vars.AZURE_FUNCTIONAPP_NAME }} \
-            --resource-group GenericForms \
-            --src-path ${{ github.workspace }}/function.zip \
-            --type zip \
-            --async false
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --settings "WEBSITE_RUN_FROM_PACKAGE=${BLOB_URL}" \
+            --output none
+
+      - name: Restart Function App
+        run: |
+          az functionapp restart \
+            --name ${{ vars.AZURE_FUNCTIONAPP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }}
