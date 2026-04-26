@@ -1,0 +1,71 @@
+name: Deploy site to Pages
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'ui_kits/website/**'
+      - 'assets/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble site
+        env:
+          FORM_ENDPOINT: ${{ vars.FORM_ENDPOINT }}
+          CUSTOM_DOMAIN: quantach.com
+        run: |
+          set -euo pipefail
+          mkdir -p _site/assets
+          cp ui_kits/website/index.html _site/index.html
+          cp -R assets/. _site/assets/
+
+          if [ -z "${FORM_ENDPOINT:-}" ]; then
+            echo "::error::Repo variable FORM_ENDPOINT is not set."
+            exit 1
+          fi
+          # Substitute the placeholder endpoint with the configured value
+          python3 - "$FORM_ENDPOINT" <<'PY'
+          import sys, pathlib
+          endpoint = sys.argv[1]
+          path = pathlib.Path("_site/index.html")
+          html = path.read_text()
+          replaced = html.replace(
+              "https://YOUR_FUNCTION_APP.azurewebsites.net/api/submit",
+              endpoint,
+          )
+          if replaced == html:
+              raise SystemExit("Placeholder FORM_ENDPOINT not found in index.html")
+          path.write_text(replaced)
+          PY
+
+          echo "$CUSTOM_DOMAIN" > _site/CNAME
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

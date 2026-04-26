@@ -1,0 +1,16 @@
+# Build artifacts
+**/bin/
+**/obj/
+
+# OS
+.DS_Store
+
+# Editor
+.vs/
+*.user
+*.suo
+
+# Local secrets / dev settings
+**/local.settings.json.local
+.env
+.env.local
