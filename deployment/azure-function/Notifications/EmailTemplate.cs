@@ -16,6 +16,8 @@ internal static class EmailTemplate
           <div style="padding:28px 32px;background:#F7F5F0;border:1px solid #E8E4DC;">
             <p style="font-size:13px;color:#8A8478;margin:0 0 20px;">New enquiry received · {ts:ddd, MMM d yyyy 'at' h:mm tt} UTC</p>
             <table style="width:100%;border-collapse:collapse;">
+              <tr><td style="padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:12px;font-weight:600;color:#8A8478;width:140px;">Form</td>
+                  <td style="padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:14px;font-family:monospace;">{s.FormId}</td></tr>
               <tr><td style="padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:12px;font-weight:600;color:#8A8478;width:140px;">Name</td>
                   <td style="padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:14px;">{s.FirstName} {s.LastName}</td></tr>
               <tr><td style="padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:12px;font-weight:600;color:#8A8478;">Email</td>

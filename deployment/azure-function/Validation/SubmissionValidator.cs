@@ -7,6 +7,9 @@ public class SubmissionValidator : ISubmissionValidator
 {
     public ValidationResult Validate(FormSubmission s)
     {
+        if (string.IsNullOrWhiteSpace(s.FormId))
+            return ValidationResult.Fail("formId is required.");
+
         if (string.IsNullOrWhiteSpace(s.FirstName) ||
             string.IsNullOrWhiteSpace(s.LastName) ||
             string.IsNullOrWhiteSpace(s.Email) ||

@@ -20,11 +20,12 @@ public class SendGridNotificationSender : INotificationSender
 
     public async Task SendAsync(FormSubmission submission, DateTimeOffset receivedAt, CancellationToken ct)
     {
+        var subject = $"New enquiry from {submission.FirstName} {submission.LastName} [{submission.FormId}]";
         var client = new SendGridClient(_options.ApiKey);
         var msg = new SendGridMessage
         {
             From = new EmailAddress(_options.AlertEmailFrom, "Quanta Capital Holdings"),
-            Subject = $"New enquiry from {submission.FirstName} {submission.LastName}",
+            Subject = subject,
             HtmlContent = EmailTemplate.BuildHtml(submission, receivedAt)
         };
         msg.AddTo(new EmailAddress(_options.AlertEmailTo));

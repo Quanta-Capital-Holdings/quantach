@@ -1,6 +1,7 @@
 namespace Quanta.Forms.Models;
 
 public record FormSubmission(
+    string FormId,
     string FirstName,
     string LastName,
     string Email,
