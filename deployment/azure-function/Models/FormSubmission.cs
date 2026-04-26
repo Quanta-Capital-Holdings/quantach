@@ -1,4 +1,4 @@
-namespace Quanta.Forms;
+namespace Quanta.Forms.Models;
 
 public record FormSubmission(
     string FirstName,

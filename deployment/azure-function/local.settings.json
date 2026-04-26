@@ -5,12 +5,14 @@
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
 
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "BlobContainerName": "form-submissions",
 
-    "SendGridApiKey": "SG.YOUR_KEY_HERE",
-    "AlertEmailTo": "info@quantach.com",
-    "AlertEmailFrom": "noreply@quantach.com",
+    "SubmissionStore:Provider": "Blob",
+    "SubmissionStore:Blob:ContainerName": "form-submissions",
 
-    "AllowedOrigin": "https://YOUR_GITHUB_USERNAME.github.io"
+    "SendGrid:ApiKey": "",
+    "SendGrid:AlertEmailTo": "info@quantach.com",
+    "SendGrid:AlertEmailFrom": "noreply@quantach.com",
+
+    "Cors:AllowedOrigin": "https://quantach.com"
   }
 }
