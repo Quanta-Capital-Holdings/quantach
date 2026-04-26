@@ -741,7 +741,7 @@ async function handleQuickForm(e) {
     const res = await fetch(FORM_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName, lastName, email, phone, message })
+      body: JSON.stringify({ formId: 'quantach-quick', firstName, lastName, email, phone, message })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Submission failed.');
@@ -764,6 +764,7 @@ async function handleContactForm(e) {
 
   const get = sel => form.querySelector(sel)?.value.trim() ?? '';
   const payload = {
+    formId:    'quantach-contact',
     firstName: get('input[placeholder="Jane"]'),
     lastName:  get('input[placeholder="Smith"]'),
     email:     get('input[type="email"]'),
