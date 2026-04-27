@@ -8,5 +8,6 @@ public record FormSubmission(
     string? Phone,
     string? Company,
     string? Industry,
-    string? Message
+    string? Message,
+    string? Honeypot
 );

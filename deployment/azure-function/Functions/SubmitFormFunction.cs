@@ -64,6 +64,18 @@ public class SubmitFormFunction
         if (submission is null)
             return CorsHelper.ErrorResponse(req, origin, HttpStatusCode.BadRequest, "Empty submission.");
 
+        // Honeypot triggered — return a convincing 200 without processing
+        if (!string.IsNullOrWhiteSpace(submission.Honeypot))
+        {
+            _logger.LogInformation("Honeypot triggered – discarding submission silently.");
+            var fakeOk = req.CreateResponse(HttpStatusCode.OK);
+            CorsHelper.AddCorsHeaders(fakeOk, origin);
+            fakeOk.Headers.Add("Content-Type", "application/json");
+            await fakeOk.WriteStringAsync(
+                JsonSerializer.Serialize(new { success = true, message = "Thank you — we'll be in touch within 24 hours." }), ct);
+            return fakeOk;
+        }
+
         var validation = _validator.Validate(submission);
         if (!validation.IsValid)
             return CorsHelper.ErrorResponse(req, origin, HttpStatusCode.UnprocessableEntity, validation.Error!);
