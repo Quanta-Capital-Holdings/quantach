@@ -10,7 +10,7 @@ on:
 
 env:
   PROJECT_PATH: deployment/azure-function/Quanta.Forms.csproj
-  DOTNET_VERSION: '10.0.x'
+  DOTNET_VERSION: '8.0.x'
   STORAGE_ACCOUNT: stquantachforms
   DEPLOY_CONTAINER: deployments
   RESOURCE_GROUP: GenericForms
