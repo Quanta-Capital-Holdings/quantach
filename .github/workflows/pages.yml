@@ -55,6 +55,27 @@ jobs:
 
           echo "$CUSTOM_DOMAIN" > _site/CNAME
 
+          # robots.txt — allow all crawlers, point to sitemap
+          cat > _site/robots.txt <<'TXT'
+          User-agent: *
+          Allow: /
+          Sitemap: https://quantach.com/sitemap.xml
+          TXT
+
+          # sitemap.xml — single-page app, only the root URL exists physically
+          TODAY=$(date -u '+%Y-%m-%d')
+          cat > _site/sitemap.xml <<XML
+          <?xml version="1.0" encoding="UTF-8"?>
+          <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+            <url>
+              <loc>https://quantach.com/</loc>
+              <lastmod>$TODAY</lastmod>
+              <changefreq>monthly</changefreq>
+              <priority>1.0</priority>
+            </url>
+          </urlset>
+          XML
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
