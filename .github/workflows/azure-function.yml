@@ -91,6 +91,14 @@ jobs:
             --settings "WEBSITE_RUN_FROM_PACKAGE=${BLOB_URL}" \
             --output none
 
+      - name: Ensure CORS allows quantach.com
+        run: |
+          az functionapp cors add \
+            --name ${{ vars.AZURE_FUNCTIONAPP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --allowed-origins "https://quantach.com" \
+            --output none || true
+
       - name: Restart Function App
         run: |
           az functionapp restart \
