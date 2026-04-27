@@ -266,11 +266,11 @@ a { color: inherit; text-decoration: none; }
       </div>
     </a>
     <div class="nav-links">
-      <a class="nav-link" onclick="showPage('home'); scrollTo('about')" href="#">Our Story</a>
-      <a class="nav-link" onclick="showPage('home'); scrollTo('pillars')" href="#">Approach</a>
-      <a class="nav-link" onclick="showPage('home'); scrollTo('process')" href="#">Process</a>
-      <a class="nav-link" onclick="showPage('home'); scrollTo('seller-cta')" href="#">Sell Your Business</a>
-      <a class="nav-btn" onclick="showPage('contact')" href="#">Contact Us</a>
+      <a class="nav-link" onclick="showPage('home'); scrollToSection('about'); return false;" href="javascript:void(0)">Our Story</a>
+      <a class="nav-link" onclick="showPage('home'); scrollToSection('pillars'); return false;" href="javascript:void(0)">Approach</a>
+      <a class="nav-link" onclick="showPage('home'); scrollToSection('process'); return false;" href="javascript:void(0)">Process</a>
+      <a class="nav-link" onclick="showPage('home'); scrollToSection('seller-cta'); return false;" href="javascript:void(0)">Sell Your Business</a>
+      <a class="nav-btn" onclick="showPage('contact'); return false;" href="javascript:void(0)">Contact Us</a>
     </div>
     <div class="nav-mobile-toggle" onclick="toggleMobileNav()">
       <span></span><span></span><span></span>
@@ -293,8 +293,8 @@ a { color: inherit; text-decoration: none; }
     <h1 class="hero-h1">We acquire great businesses<br>and help them <em>grow further.</em></h1>
     <p class="hero-sub">Quanta Capital Holdings partners with exceptional companies across Canada to unlock their full potential through strategic acquisition and hands-on operational expertise.</p>
     <div class="hero-actions">
-      <a class="btn-hero-primary" onclick="showPage('contact')" href="#">Explore an Acquisition →</a>
-      <a class="btn-hero-ghost" onclick="scrollTo('about')" href="#">Learn Our Approach</a>
+      <a class="btn-hero-primary" onclick="showPage('contact'); return false;" href="javascript:void(0)">Explore an Acquisition →</a>
+      <a class="btn-hero-ghost" onclick="scrollToSection('about'); return false;" href="javascript:void(0)">Learn Our Approach</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -327,7 +327,7 @@ a { color: inherit; text-decoration: none; }
         <h2>A partner built for the long term, not the next quarter.</h2>
         <p>Quanta Capital Holdings Inc. is a Canadian investment firm and holding company. Our mission is to drive growth and value creation through strategic business acquisitions — partnering with exceptional companies to unlock their full potential.</p>
         <p>We leverage our expertise in operations, finance, and market expansion to foster sustainable success and long-term profitability. When you partner with Quanta, you gain more than capital — you gain a committed, experienced team with skin in the game.</p>
-        <a class="about-link" onclick="scrollTo('pillars')" href="#">Discover our investment philosophy</a>
+        <a class="about-link" onclick="scrollToSection('pillars'); return false;" href="javascript:void(0)">Discover our investment philosophy</a>
       </div>
     </div>
   </div>
@@ -433,7 +433,7 @@ a { color: inherit; text-decoration: none; }
             Your legacy is protected — we don't strip and flip
           </li>
         </ul>
-        <a class="btn-hero-primary" onclick="showPage('contact')" href="#">Start the Conversation →</a>
+        <a class="btn-hero-primary" onclick="showPage('contact'); return false;" href="javascript:void(0)">Start the Conversation →</a>
       </div>
 
       <!-- Quick Contact Form -->
@@ -560,10 +560,6 @@ a { color: inherit; text-decoration: none; }
                 <input class="cf-input" type="email" placeholder="jane@company.ca" required>
               </div>
               <div class="field-single">
-                <label class="cf-label">Phone number <span class="cf-req">*</span></label>
-                <input class="cf-input" type="tel" placeholder="+1 (416) 555-0100" required>
-              </div>
-              <div class="field-single">
                 <label class="cf-label">Company / Business name</label>
                 <input class="cf-input" type="text" placeholder="Smith Group Inc.">
               </div>
@@ -620,16 +616,16 @@ a { color: inherit; text-decoration: none; }
       <div class="footer-col">
         <h4>Company</h4>
         <ul>
-          <li><a href="#" onclick="showPage('home'); scrollTo('about')">Our Story</a></li>
-          <li><a href="#" onclick="showPage('home'); scrollTo('pillars')">Our Approach</a></li>
-          <li><a href="#" onclick="showPage('home'); scrollTo('process')">Our Process</a></li>
+          <li><a href="javascript:void(0)" onclick="showPage('home'); scrollToSection('about'); return false;">Our Story</a></li>
+          <li><a href="javascript:void(0)" onclick="showPage('home'); scrollToSection('pillars'); return false;">Our Approach</a></li>
+          <li><a href="javascript:void(0)" onclick="showPage('home'); scrollToSection('process'); return false;">Our Process</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Get In Touch</h4>
         <ul>
-          <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
-          <li><a href="#" onclick="showPage('home'); scrollTo('seller-cta')">Sell Your Business</a></li>
+          <li><a href="javascript:void(0)" onclick="showPage('contact'); return false;">Contact Us</a></li>
+          <li><a href="javascript:void(0)" onclick="showPage('home'); scrollToSection('seller-cta'); return false;">Sell Your Business</a></li>
           <li><a href="mailto:info@quantach.com">info@quantach.com</a></li>
         </ul>
       </div>
@@ -646,11 +642,11 @@ a { color: inherit; text-decoration: none; }
 function showPage(page) {
   document.getElementById('home-page').style.display = page === 'home' ? 'block' : 'none';
   document.getElementById('contact-page').style.display = page === 'contact' ? 'block' : 'none';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollToSection({ top: 0, behavior: 'smooth' });
   localStorage.setItem('qch_page', page);
 }
 
-function scrollTo(id) {
+function scrollToSection(id) {
   setTimeout(() => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -737,7 +733,7 @@ async function handleContactForm(e) {
     firstName: get('input[placeholder="Jane"]'),
     lastName:  get('input[placeholder="Smith"]'),
     email:     get('input[type="email"]'),
-    phone:     get('input[type="tel"]'),
+
     company:   get('input[placeholder="Smith Group Inc."]'),
     industry:  get('select'),
     message:   get('textarea')
