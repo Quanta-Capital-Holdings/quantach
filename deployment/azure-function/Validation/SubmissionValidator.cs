@@ -12,10 +12,9 @@ public class SubmissionValidator : ISubmissionValidator
 
         if (string.IsNullOrWhiteSpace(s.FirstName) ||
             string.IsNullOrWhiteSpace(s.LastName) ||
-            string.IsNullOrWhiteSpace(s.Email) ||
-            string.IsNullOrWhiteSpace(s.Phone))
+            string.IsNullOrWhiteSpace(s.Email))
         {
-            return ValidationResult.Fail("First name, last name, email, and phone are required.");
+            return ValidationResult.Fail("First name, last name, and email are required.");
         }
 
         if (!s.Email.Contains('@') || !s.Email.Contains('.'))

@@ -22,8 +22,7 @@ internal static class EmailTemplate
                   <td style="padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:14px;">{s.FirstName} {s.LastName}</td></tr>
               <tr><td style="padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:12px;font-weight:600;color:#8A8478;">Email</td>
                   <td style="padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:14px;"><a href="mailto:{s.Email}" style="color:#0B1F3A;">{s.Email}</a></td></tr>
-              <tr><td style="padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:12px;font-weight:600;color:#8A8478;">Phone</td>
-                  <td style="padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:14px;"><a href="tel:{s.Phone}" style="color:#0B1F3A;">{s.Phone}</a></td></tr>
+              {(string.IsNullOrWhiteSpace(s.Phone) ? "" : $"<tr><td style=\"padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:12px;font-weight:600;color:#8A8478;\">Phone</td><td style=\"padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:14px;\"><a href=\"tel:{s.Phone}\" style=\"color:#0B1F3A;\">{s.Phone}</a></td></tr>")}
               {(string.IsNullOrWhiteSpace(s.Company) ? "" : $"<tr><td style=\"padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:12px;font-weight:600;color:#8A8478;\">Company</td><td style=\"padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:14px;\">{s.Company}</td></tr>")}
               {(string.IsNullOrWhiteSpace(s.Industry) ? "" : $"<tr><td style=\"padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:12px;font-weight:600;color:#8A8478;\">Industry</td><td style=\"padding:10px 0;border-bottom:1px solid #E8E4DC;font-size:14px;\">{s.Industry}</td></tr>")}
             </table>

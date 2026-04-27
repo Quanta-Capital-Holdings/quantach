@@ -146,8 +146,9 @@ a { color: inherit; text-decoration: none; }
   transition: border-color 0.2s, background 0.2s; width: 100%;
 }
 .form-field input::placeholder, .form-field textarea::placeholder { color: rgba(255,255,255,0.3); }
-.form-field input:focus, .form-field textarea:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); }
+.form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); }
 .form-field textarea { resize: vertical; min-height: 90px; }
+.form-field select option { background: #071529; color: white; }
 .form-req { color: var(--gold-light); }
 .form-submit { width: 100%; background: var(--gold); color: white; border: none; border-radius: 4px; padding: 14px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.15s; margin-top: 8px; letter-spacing: 0.02em; }
 .form-submit:hover { background: #b5841f; transform: translateY(-1px); }
@@ -437,24 +438,39 @@ a { color: inherit; text-decoration: none; }
           <div class="form-row">
             <div class="form-field">
               <label>First name <span class="form-req">*</span></label>
-              <input type="text" placeholder="Jane" required>
+              <input type="text" name="firstName" placeholder="Jane" required>
             </div>
             <div class="form-field">
               <label>Last name <span class="form-req">*</span></label>
-              <input type="text" placeholder="Smith" required>
+              <input type="text" name="lastName" placeholder="Smith" required>
             </div>
           </div>
           <div class="form-field" style="margin-bottom:12px">
             <label>Email address <span class="form-req">*</span></label>
-            <input type="email" placeholder="jane@company.ca" required>
+            <input type="email" name="email" placeholder="jane@company.ca" required>
           </div>
           <div class="form-field" style="margin-bottom:12px">
-            <label>Phone number <span class="form-req">*</span></label>
-            <input type="tel" placeholder="+1 (416) 555-0100" required>
+            <label>Company / Business name</label>
+            <input type="text" name="company" placeholder="Smith Group Inc.">
+          </div>
+          <div class="form-field" style="margin-bottom:12px">
+            <label>Industry</label>
+            <select name="industry">
+              <option value="" disabled selected>Select your industry</option>
+              <option>Manufacturing</option>
+              <option>Distribution &amp; Logistics</option>
+              <option>Business Services</option>
+              <option>Technology</option>
+              <option>Healthcare</option>
+              <option>Construction &amp; Trades</option>
+              <option>Retail &amp; Consumer</option>
+              <option>Food &amp; Beverage</option>
+              <option>Other</option>
+            </select>
           </div>
           <div class="form-field" style="margin-bottom:8px">
-            <label>Tell us about your business</label>
-            <textarea placeholder="Industry, annual revenue, reason for considering a sale..."></textarea>
+            <label>Message <span class="form-req">*</span></label>
+            <textarea name="message" placeholder="Tell us about your business and what you're looking for." required></textarea>
           </div>
           <button type="submit" class="form-submit">Send Message</button>
           <div id="quick-error" style="display:none;margin-top:10px;font-size:12px;color:#DFC070;text-align:center;"></div>
@@ -530,39 +546,39 @@ a { color: inherit; text-decoration: none; }
               <div class="field-group">
                 <div>
                   <label class="cf-label">First name <span class="cf-req">*</span></label>
-                  <input class="cf-input" type="text" placeholder="Jane" required>
+                  <input class="cf-input" type="text" name="firstName" placeholder="Jane" required>
                 </div>
                 <div>
                   <label class="cf-label">Last name <span class="cf-req">*</span></label>
-                  <input class="cf-input" type="text" placeholder="Smith" required>
+                  <input class="cf-input" type="text" name="lastName" placeholder="Smith" required>
                 </div>
               </div>
               <div class="field-single">
                 <label class="cf-label">Email address <span class="cf-req">*</span></label>
-                <input class="cf-input" type="email" placeholder="jane@company.ca" required>
+                <input class="cf-input" type="email" name="email" placeholder="jane@company.ca" required>
               </div>
               <div class="field-single">
                 <label class="cf-label">Company / Business name</label>
-                <input class="cf-input" type="text" placeholder="Smith Group Inc.">
+                <input class="cf-input" type="text" name="company" placeholder="Smith Group Inc.">
               </div>
               <div class="field-single">
                 <label class="cf-label">Industry</label>
-                <select class="cf-select">
+                <select class="cf-select" name="industry">
                   <option value="" disabled selected>Select your industry</option>
                   <option>Manufacturing</option>
-                  <option>Distribution & Logistics</option>
+                  <option>Distribution &amp; Logistics</option>
                   <option>Business Services</option>
                   <option>Technology</option>
                   <option>Healthcare</option>
-                  <option>Construction & Trades</option>
-                  <option>Retail & Consumer</option>
-                  <option>Food & Beverage</option>
+                  <option>Construction &amp; Trades</option>
+                  <option>Retail &amp; Consumer</option>
+                  <option>Food &amp; Beverage</option>
                   <option>Other</option>
                 </select>
               </div>
               <div class="field-single">
                 <label class="cf-label">Message <span class="cf-req">*</span></label>
-                <textarea class="cf-textarea" placeholder="Tell us about your business and what you're looking for. No details are too small." required></textarea>
+                <textarea class="cf-textarea" name="message" placeholder="Tell us about your business and what you're looking for. No details are too small." required></textarea>
               </div>
               <button type="submit" class="cf-submit">Send Message</button>
               <div id="contact-error" style="display:none;margin-top:10px;font-size:12px;color:var(--color-error,#B33A3A);text-align:center;padding:8px;background:#FEF2F2;border-radius:4px;border:1px solid #FECACA;"></div>
@@ -671,54 +687,22 @@ function showFormError(containerId, msg) {
   el.style.display = 'block';
 }
 
-// ── Quick form (homepage) ───────────────────────
-async function handleQuickForm(e) {
-  e.preventDefault();
-  const form = e.target;
-  const btn = form.querySelector('.form-submit');
+// ── Shared form submission ──────────────────────
+async function _submitForm(form, formId, errorId, onSuccess) {
+  const btn = form.querySelector('button[type="submit"]');
   if (!btn.dataset.label) btn.dataset.label = btn.textContent;
-  const errEl = document.getElementById('quick-error');
+  const errEl = document.getElementById(errorId);
   if (errEl) errEl.style.display = 'none';
 
-  const inputs = form.querySelectorAll('input, textarea');
-  const [firstName, lastName, email, phone, message] = [...inputs].map(i => i.value.trim());
-
-  setSubmitState(btn, true);
-  try {
-    const res = await fetch(FORM_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ formId: 'quantach-quick', firstName, lastName, email, phone, message })
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Submission failed.');
-    document.getElementById('quick-form').style.display = 'none';
-    document.getElementById('quick-success').style.display = 'block';
-  } catch (err) {
-    setSubmitState(btn, false);
-    showFormError('quick-error', err.message || 'Something went wrong. Please try again.');
-  }
-}
-
-// ── Full contact form ───────────────────────────
-async function handleContactForm(e) {
-  e.preventDefault();
-  const form = e.target;
-  const btn = form.querySelector('.cf-submit');
-  if (!btn.dataset.label) btn.dataset.label = btn.textContent;
-  const errEl = document.getElementById('contact-error');
-  if (errEl) errEl.style.display = 'none';
-
-  const get = sel => form.querySelector(sel)?.value.trim() ?? '';
+  const get = name => (form.elements[name]?.value ?? '').trim();
   const payload = {
-    formId:    'quantach-contact',
-    firstName: get('input[placeholder="Jane"]'),
-    lastName:  get('input[placeholder="Smith"]'),
-    email:     get('input[type="email"]'),
-
-    company:   get('input[placeholder="Smith Group Inc."]'),
-    industry:  get('select'),
-    message:   get('textarea')
+    formId,
+    firstName: get('firstName'),
+    lastName:  get('lastName'),
+    email:     get('email'),
+    company:   get('company') || null,
+    industry:  get('industry') || null,
+    message:   get('message') || null,
   };
 
   setSubmitState(btn, true);
@@ -730,12 +714,27 @@ async function handleContactForm(e) {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Submission failed.');
-    document.getElementById('contact-form-inner').style.display = 'none';
-    document.getElementById('contact-success').classList.add('show');
+    onSuccess();
   } catch (err) {
     setSubmitState(btn, false);
-    showFormError('contact-error', err.message || 'Something went wrong. Please try again.');
+    showFormError(errorId, err.message || 'Something went wrong. Please try again.');
   }
+}
+
+async function handleQuickForm(e) {
+  e.preventDefault();
+  await _submitForm(e.target, 'quantach-quick', 'quick-error', () => {
+    document.getElementById('quick-form').style.display = 'none';
+    document.getElementById('quick-success').style.display = 'block';
+  });
+}
+
+async function handleContactForm(e) {
+  e.preventDefault();
+  await _submitForm(e.target, 'quantach-contact', 'contact-error', () => {
+    document.getElementById('contact-form-inner').style.display = 'none';
+    document.getElementById('contact-success').classList.add('show');
+  });
 }
 
 function resetContactForm() {
