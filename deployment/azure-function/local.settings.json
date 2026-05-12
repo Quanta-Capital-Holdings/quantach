@@ -9,9 +9,28 @@
     "SubmissionStore:Provider": "Blob",
     "SubmissionStore:Blob:ContainerName": "form-submissions",
 
+    "Notifications:Provider": "Resend",
+
+    "Resend:ApiKey": "",
+    "Resend:AlertEmailFrom": "noreply@quantach.com",
+    "Resend:FromName": "Quanta Capital Holdings",
+    "Resend:AlertEmailTo": "info@umplify.com",
+
     "SendGrid:ApiKey": "",
     "SendGrid:AlertEmailTo": "info@quantach.com",
     "SendGrid:AlertEmailFrom": "noreply@quantach.com",
+
+    "Brand:Name": "QUANTA",
+    "Brand:Tagline": "Capital Holdings",
+    "Brand:FooterText": "Quanta Capital Holdings Inc. · Toronto, Ontario, Canada",
+    "Brand:ReplySubjectPrefix": "Re: Your enquiry to Quanta Capital Holdings",
+    "Brand:HeaderBackground": "#0B1F3A",
+    "Brand:FooterBackground": "#071529",
+    "Brand:AccentColor": "#C4922A",
+    "Brand:BodyBackground": "#F7F5F0",
+    "Brand:BorderColor": "#E8E4DC",
+    "Brand:TextColor": "#1A1612",
+    "Brand:MutedColor": "#8A8478",
 
     "Cors:AllowedOrigin": "https://quantach.com"
   }

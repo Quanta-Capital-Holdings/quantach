@@ -82,6 +82,16 @@ public class SubmitFormFunction
 
         var receivedAt = DateTimeOffset.UtcNow;
 
+        // Notify first so the alert email goes out regardless of whether the store save succeeds.
+        try
+        {
+            await _notifier.SendAsync(submission, receivedAt, ct);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Notification failed (continuing to store save).");
+        }
+
         try
         {
             await _store.SaveAsync(submission, receivedAt, ct);
@@ -91,15 +101,6 @@ public class SubmitFormFunction
             _logger.LogError(ex, "Failed to save submission.");
             return CorsHelper.ErrorResponse(req, origin, HttpStatusCode.InternalServerError,
                 "We couldn't save your submission. Please try again or email us directly.");
-        }
-
-        try
-        {
-            await _notifier.SendAsync(submission, receivedAt, ct);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Notification failed (submission was saved).");
         }
 
         var response = req.CreateResponse(HttpStatusCode.OK);
