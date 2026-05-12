@@ -91,6 +91,19 @@ jobs:
             --settings "WEBSITE_RUN_FROM_PACKAGE=${BLOB_URL}" \
             --output none
 
+      - name: Configure notification app settings (Resend)
+        run: |
+          az functionapp config appsettings set \
+            --name ${{ vars.AZURE_FUNCTIONAPP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --settings \
+              "Notifications__Provider=Resend" \
+              "Resend__ApiKey=${{ secrets.RESEND_API_KEY }}" \
+              "Resend__AlertEmailFrom=noreply@umplify.com" \
+              "Resend__FromName=Quanta Capital Holdings" \
+              "Resend__AlertEmailTo=info@umplify.com" \
+            --output none
+
       - name: Ensure CORS allows quantach.com
         run: |
           az functionapp cors add \

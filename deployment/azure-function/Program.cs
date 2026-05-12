@@ -39,17 +39,20 @@ var host = new HostBuilder()
                 ?? "form-submissions";
         });
 
-        var provider = config["SubmissionStore:Provider"] ?? "Blob";
-        switch (provider)
+        var storeProvider = config["SubmissionStore:Provider"] ?? "Blob";
+        switch (storeProvider)
         {
             case "Blob":
                 services.AddSingleton<ISubmissionStore, BlobSubmissionStore>();
                 break;
             default:
-                throw new InvalidOperationException($"Unknown SubmissionStore:Provider '{provider}'.");
+                throw new InvalidOperationException($"Unknown SubmissionStore:Provider '{storeProvider}'.");
         }
 
-        // Notifications — fall back to Null sender when no API key configured
+        // Brand (email template parameters — per-deployment, site-agnostic)
+        services.Configure<BrandOptions>(config.GetSection(BrandOptions.SectionName));
+
+        // SendGrid options (kept for backwards compat)
         services.Configure<SendGridOptions>(opts =>
         {
             opts.ApiKey = config["SendGrid:ApiKey"] ?? config["SendGridApiKey"] ?? "";
@@ -57,11 +60,37 @@ var host = new HostBuilder()
             opts.AlertEmailFrom = config["SendGrid:AlertEmailFrom"] ?? config["AlertEmailFrom"] ?? "noreply@quantach.com";
         });
 
-        var sendGridKey = config["SendGrid:ApiKey"] ?? config["SendGridApiKey"];
-        if (!string.IsNullOrWhiteSpace(sendGridKey))
-            services.AddSingleton<INotificationSender, SendGridNotificationSender>();
-        else
-            services.AddSingleton<INotificationSender, NullNotificationSender>();
+        // Resend options (binds Resend:RecipientsByFormId dictionary too)
+        services.Configure<ResendOptions>(config.GetSection(ResendOptions.SectionName));
+
+        // Notification provider selection.
+        // Explicit "Notifications:Provider" wins. Otherwise auto-detect by which API key is set.
+        var notifProvider = config["Notifications:Provider"];
+        if (string.IsNullOrWhiteSpace(notifProvider))
+        {
+            if (!string.IsNullOrWhiteSpace(config["Resend:ApiKey"]))
+                notifProvider = "Resend";
+            else if (!string.IsNullOrWhiteSpace(config["SendGrid:ApiKey"]) || !string.IsNullOrWhiteSpace(config["SendGridApiKey"]))
+                notifProvider = "SendGrid";
+            else
+                notifProvider = "None";
+        }
+
+        switch (notifProvider)
+        {
+            case "Resend":
+                services.AddHttpClient<ResendNotificationSender>();
+                services.AddTransient<INotificationSender>(sp => sp.GetRequiredService<ResendNotificationSender>());
+                break;
+            case "SendGrid":
+                services.AddSingleton<INotificationSender, SendGridNotificationSender>();
+                break;
+            case "None":
+                services.AddSingleton<INotificationSender, NullNotificationSender>();
+                break;
+            default:
+                throw new InvalidOperationException($"Unknown Notifications:Provider '{notifProvider}'.");
+        }
     })
     .Build();
 

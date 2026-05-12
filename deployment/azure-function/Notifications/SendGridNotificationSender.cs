@@ -10,11 +10,16 @@ namespace Quanta.Forms.Notifications;
 public class SendGridNotificationSender : INotificationSender
 {
     private readonly SendGridOptions _options;
+    private readonly BrandOptions _brand;
     private readonly ILogger<SendGridNotificationSender> _logger;
 
-    public SendGridNotificationSender(IOptions<SendGridOptions> options, ILogger<SendGridNotificationSender> logger)
+    public SendGridNotificationSender(
+        IOptions<SendGridOptions> options,
+        IOptions<BrandOptions> brand,
+        ILogger<SendGridNotificationSender> logger)
     {
         _options = options.Value;
+        _brand = brand.Value;
         _logger = logger;
     }
 
@@ -24,9 +29,9 @@ public class SendGridNotificationSender : INotificationSender
         var client = new SendGridClient(_options.ApiKey);
         var msg = new SendGridMessage
         {
-            From = new EmailAddress(_options.AlertEmailFrom, "Quanta Capital Holdings"),
+            From = new EmailAddress(_options.AlertEmailFrom, _brand.Name),
             Subject = subject,
-            HtmlContent = EmailTemplate.BuildHtml(submission, receivedAt)
+            HtmlContent = EmailTemplate.BuildHtml(submission, receivedAt, _brand)
         };
         msg.AddTo(new EmailAddress(_options.AlertEmailTo));
 
